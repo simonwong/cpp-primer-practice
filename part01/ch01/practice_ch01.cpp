@@ -101,6 +101,38 @@ int p1_11 () {
   return 0;
 }
 
+int p1_12_for () {
+  int sum = 0;
+  for (int i = -100; i <= 100; i++) {
+    sum += i;
+  }
+  std::cout << "最终sum 结果为" << sum << std::endl;
+  return 0;
+}
+
+int p1_13 () {
+  int result = 0;
+
+  for (int val = 50; val < 100; val++) {
+    result += val;
+  }
+
+  std::cout << "50 到 100的整数相加结果" << result << std::endl;
+  return 0;
+}
+
+int p1_14 () {
+  // 对比：
+  // for 循环可以把初始化、条件、动作一开始就编写好，while 容易遗漏，容易死循环
+  return 0;
+}
+
+int p1_15 () {
+  // 熟悉编译器生成的错误
+  return 0;
+}
+
+
 int main () {
   p1_1();
   p1_2();
@@ -113,6 +145,10 @@ int main () {
   p1_9_while();
   p1_10();
   p1_11();
+  p1_12_for();
+  p1_13();
+  p1_14();
+  p1_15();
 
   return 0;
 }

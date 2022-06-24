@@ -27,3 +27,9 @@ while (condition) {
   statement
 }
 ```
+
+```c++
+for (init-statement; condition; expression) {
+  
+}
+```
