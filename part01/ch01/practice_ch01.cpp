@@ -132,23 +132,83 @@ int p1_15 () {
   return 0;
 }
 
+int p1_16 () {
+  int sum = 0;
+  int value = 0;
+
+  while (std::cin >> value) {
+    sum += value;
+    std::cout << "Sum is:" << sum << std::endl;
+  }
+
+  return 0;
+}
+
+int p1_17_18 () {
+  int curVal = 0;
+  int val = 0;
+
+  if (std::cin >> curVal) {
+    int cnt = 1;
+
+    while (std::cin >> val) {
+      if (curVal == val) {
+        ++cnt;
+      } else {
+        std::cout << curVal << " BB: occurs " << cnt << " times." << std::endl;
+        curVal = val;
+        cnt = 1;
+      }
+    }
+    std::cout << curVal << " AA: occurs " << cnt << " times." << std::endl;
+  }
+
+  return 0;
+}
+
+int p1_19 () {
+  int min;
+  int max;
+
+  std::cout << "请输入两个数字，将打印出两个数字之间的所有整数" << std::endl
+    << "第一个整数：" << std::endl;
+  std::cin >> min;
+  std::cout << "第二个整数：" << std::endl;
+  std::cin >> max;
+
+  if (min > max) {
+    int temp = max;
+    max = min;
+    min = temp;
+  }
+
+  while (min <= max) {
+    std::cout << min++ << ";";
+  }
+  std::cout << std::endl;
+  return 0;
+}
+
 
 int main () {
-  p1_1();
-  p1_2();
-  p1_3_hello_world();
-  p1_4();
-  p1_5();
-  p1_6();
-  p1_7();
-  p1_8();
-  p1_9_while();
-  p1_10();
-  p1_11();
-  p1_12_for();
-  p1_13();
-  p1_14();
-  p1_15();
+  // p1_1();
+  // p1_2();
+  // p1_3_hello_world();
+  // p1_4();
+  // p1_5();
+  // p1_6();
+  // p1_7();
+  // p1_8();
+  // p1_9_while();
+  // p1_10();
+  // p1_11();
+  // p1_12_for();
+  // p1_13();
+  // p1_14();
+  // p1_15();
+  // p1_16();
+  // p1_17_18();
+  p1_19();
 
   return 0;
 }

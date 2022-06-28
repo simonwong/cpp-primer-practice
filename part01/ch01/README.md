@@ -33,3 +33,9 @@ for (init-statement; condition; expression) {
   
 }
 ```
+
+```c++
+if (condition) {
+  
+}
+```
