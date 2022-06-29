@@ -1,6 +1,5 @@
 #include <iostream>
-
-using std::string;
+#include "Sales_item.h"
 
 int p1_1 () {
   return 0;
@@ -189,26 +188,59 @@ int p1_19 () {
   return 0;
 }
 
+int p1_20_class () {
+  Sales_item book;
+  // 读入：ISBN号、售出册数、销售价格
+  std::cin >> book;
+  // 输出：ISBN号、售出册数、总销售额、平均价格
+  std::cout << book << std::endl;
+  return 0;
+}
+
+int p1_21 () {
+  Sales_item item1, item2;
+  std::cin >> item1;
+  std::cin >> item2;
+  std::cout << item1 + item2 << std::endl;
+  return 0;
+}
+
+int p1_22 () {
+  Sales_item sum_item;
+  std::cin >> sum_item;
+
+  Sales_item curItem;
+  while (std::cin >> curItem) {
+    sum_item += curItem;
+  }
+
+  std::cout << "All sale items:" << sum_item << std::endl;
+  return 0;
+}
+
 
 int main () {
-  // p1_1();
-  // p1_2();
-  // p1_3_hello_world();
-  // p1_4();
-  // p1_5();
-  // p1_6();
-  // p1_7();
-  // p1_8();
-  // p1_9_while();
-  // p1_10();
-  // p1_11();
-  // p1_12_for();
-  // p1_13();
-  // p1_14();
-  // p1_15();
-  // p1_16();
-  // p1_17_18();
+  p1_1();
+  p1_2();
+  p1_3_hello_world();
+  p1_4();
+  p1_5();
+  p1_6();
+  p1_7();
+  p1_8();
+  p1_9_while();
+  p1_10();
+  p1_11();
+  p1_12_for();
+  p1_13();
+  p1_14();
+  p1_15();
+  p1_16();
+  p1_17_18();
   p1_19();
+  p1_20_class();
+  p1_21();
+  p1_22();
 
   return 0;
 }
