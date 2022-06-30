@@ -218,6 +218,30 @@ int p1_22 () {
   return 0;
 }
 
+int p1_23_24_25 () {
+  Sales_item total;
+
+  if (std::cin >> total) {
+    Sales_item trans;
+
+    while (std::cin >> trans) {
+      if (total.isbn() == trans.isbn()) {
+        total += trans;
+      } else {
+        std::cout << total << std::endl;
+        total = trans;
+      }
+    }
+
+    std::cout << total << std::endl;
+  } else {
+    std::cerr << "No Data?!" << std::endl;
+    return -1;
+  }
+
+  return 0;
+}
+
 
 int main () {
   p1_1();
@@ -241,6 +265,7 @@ int main () {
   p1_20_class();
   p1_21();
   p1_22();
+  p1_23_24_25();
 
   return 0;
 }
