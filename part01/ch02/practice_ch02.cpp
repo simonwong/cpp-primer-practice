@@ -108,6 +108,27 @@ int p2_8 () {
   return 0;
 }
 
+int p2_9 () {
+  // std::cin >> int input_value; // 不合法：input_value 需要先初始化
+  // int i = { 3.14 }; // 不合法：花括号初始化对于可能丢失信息时会报错
+  // double salary = wage = 9999.99; // 不合法：wage 未定义
+  int i = 3.14; // warning，小数位会被截断
+  return 0;
+}
+
+
+
+int p2_10 () {
+  // 假设这里是在全局环境
+  // std::string global_str; // 空字符串
+  // int global_int; // 0
+  // int main () {
+  //   int local_int; // 没有初始化，未定义
+  //   std::string local_str; // 没有初始化，值由类确定，为空字符串
+  // }
+  return 0;
+}
+
 int main () {
   p2_1();
   p2_2();
@@ -116,6 +137,8 @@ int main () {
   p2_6();
   p2_7();
   p2_8();
+  p2_9();
+  p2_10();
 
   return 0;
 }
