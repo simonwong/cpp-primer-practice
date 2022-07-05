@@ -129,16 +129,35 @@ int p2_10 () {
   return 0;
 }
 
+int p2_11 () {
+  extern int ix = 1024; // 定义，= 抵消了 extern
+  int iy; // 定义
+  extern int iz; // 声明
+  return 0;
+}
+
+int p2_12 () {
+  // int double = 3.14; // 非法的 double
+  int _; // 合法的
+  // int catch-22; // 非法的 -
+  // int 1_or_2 = 1; // 非法的 1 开头
+  double Double = 3.14; // 合法的
+
+  return 0;
+}
+
 int main () {
   p2_1();
-  p2_2();
+  // p2_2();
   p2_3_4();
   p2_5();
   p2_6();
   p2_7();
   p2_8();
-  p2_9();
-  p2_10();
+  // p2_9();
+  // p2_10();
+  // p2_11();
+  // p2_12();
 
   return 0;
 }
