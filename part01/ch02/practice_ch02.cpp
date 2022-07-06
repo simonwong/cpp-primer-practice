@@ -130,7 +130,7 @@ int p2_10 () {
 }
 
 int p2_11 () {
-  extern int ix = 1024; // 定义，= 抵消了 extern
+  // extern int ix = 1024; // 定义，= 抵消了 extern
   int iy; // 定义
   extern int iz; // 声明
   return 0;
@@ -142,6 +142,30 @@ int p2_12 () {
   // int catch-22; // 非法的 -
   // int 1_or_2 = 1; // 非法的 1 开头
   double Double = 3.14; // 合法的
+
+  return 0;
+}
+
+int p2_13 () {
+  // int i = 42;
+
+  // int main () {
+  //   int i = 100;
+  //   int j = i;
+
+  //   // j 为 100
+  // }
+  return 0;
+}
+
+int p2_14 () {
+  int i = 100, sum = 0;
+  for (int i = 0; i != 10; i++) {
+    sum += i;
+  }
+
+  std::cout << i << " " <<  sum << std::endl;
+  // i 100，sum 45
 
   return 0;
 }
@@ -158,6 +182,8 @@ int main () {
   // p2_10();
   // p2_11();
   // p2_12();
+  // p2_13();
+  p2_14();
 
   return 0;
 }
