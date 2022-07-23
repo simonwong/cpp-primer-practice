@@ -67,11 +67,39 @@ int p2_29 () {
   // ic = *p3 // ❌ 不合法，ic 是常量不能修改
 }
 
+int p2_30_31 () {
+  const int v2 = 0; // 顶层 const
+  int v1 = v2; // 非 const
+  int *p1 = &v1; // 非 const
+  int &r1 = v1; // 非 const
+  const int *p2 = &v2; //  底层 const
+  int i = 123;
+  const int *const p3 = &i; // 左侧底层 const，右侧顶层 const
+  const int &r2 = v2; // 底层 const
+
+  r1 = v2; // 合法
+  // p1 = p2; // ❌ 不合法，p2 是 指针常量不能复制给普通指针
+  p2 = p1; // 合法，底层 const 可以改变
+  // p1 = p3; // ❌ 不合法，p3 是 const 指针不能赋值给普通指针
+  p2 = p3; // 合法，底层 const 可以改变
+
+  return 0;
+}
+
+int p2_32 () {
+  int null = 0; // 合法
+  // 不合法， 指针声明需要使用取地址符
+  // int *p = null;
+  int *p = &null;
+}
+
 int main () {
   // p2_26();
   p2_27();
   // p2_28();
   // p2_29();
+  // p2_30_31();
+  // p2_32();
 
   return 0;
 }
