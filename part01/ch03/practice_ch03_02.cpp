@@ -1,10 +1,12 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using std::cout;
 using std::cin;
-using std::endl;
 using std::string;
+using std::vector;
+using std::endl;
 using std::getline;
 
 int p3_2_3 () {
@@ -123,6 +125,24 @@ int p3_11 () {
   return 0;
 }
 
+int p3_12 () {
+  vector<vector<int>> ivec; // 二维集合
+  // vector<string> svec = ivec; // ❌ 不合法
+  vector<string> svec(10, "null"); // 长度为 10 ，每个对象都为 "null" 的集合
+  return 0;
+}
+
+int p3_13 () {
+  vector<int> v1; // 长度 0
+  vector<int> v2(10); // 长度 10，每个值为 0
+  vector<int> v3(10, 42); // 长度 10，每个值为 42
+  vector<int> v4{10}; // 长度 1，值为 10
+  vector<int> v5{10, 42}; // 长度 2，值为 10, 42
+  vector<string> v6{10}; // 长度 10，每个值为 空 string 对象
+  vector<string> v7{10, "hi"}; // 长度 10，每个值为 "hi"
+  return 0;
+}
+
 int main () {
   p3_2_3();
   p3_4();
@@ -131,6 +151,8 @@ int main () {
   p3_9();
   p3_10();
   p3_11();
+  p3_12();
+  p3_13();
 
   return 0;
 }
