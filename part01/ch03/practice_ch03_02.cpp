@@ -69,10 +69,68 @@ int p3_5 () {
   return 0;
 }
 
+int p3_6_7_8 () {
+  string str("asd zxc qwe");
+
+  for (string::size_type i = 0; i < str.size(); i++) {
+    auto &c = str[i];
+    if (c != ' ') {
+      c = 'X';
+    }
+  }
+
+  cout << str << endl;
+
+  string asdStr("hello asd");
+  string::size_type j = 0;
+
+  while (j < asdStr.size()) {
+    auto &c = asdStr[j];
+    if (c != ' ') {
+      c = 'X';
+    }
+  }
+  cout << asdStr << endl;
+  return 0;
+}
+
+int p3_9 () {
+  string s;
+  cout << s[0] << endl;
+  return 0;
+}
+
+int p3_10 () {
+  string str = "hello, today is a good day; right?";
+  string ans = "";
+
+  for (size_t i = 0; i < str.size(); i++) {
+    int c = str[i];
+    if (!ispunct(c)) {
+      ans += str[i];
+    }
+  }
+  cout << ans << endl;
+  return 0;
+}
+
+int p3_11 () {
+  const string s = "Keep out!";
+  // c 的类型是 &chart， chart 的引用
+  for (auto &c : s) {
+    cout << c << endl;
+  }
+  return 0;
+}
+
 int main () {
   p3_2_3();
   p3_4();
   p3_5();
+  p3_6_7_8();
+  p3_9();
+  p3_10();
+  p3_11();
 
   return 0;
 }
