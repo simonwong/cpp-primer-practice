@@ -132,14 +132,112 @@ int p3_12 () {
   return 0;
 }
 
-int p3_13 () {
+int p3_13_16 () {
   vector<int> v1; // 长度 0
+  cout << "v1 size: " << v1.size() << endl;
+
   vector<int> v2(10); // 长度 10，每个值为 0
+  cout << "v2 size: " << v2.size() << endl;
+
   vector<int> v3(10, 42); // 长度 10，每个值为 42
+  cout << "v3 size: " << v3.size() << endl;
+
   vector<int> v4{10}; // 长度 1，值为 10
+  cout << "v4 size: " << v4.size() << endl;
+
   vector<int> v5{10, 42}; // 长度 2，值为 10, 42
+  cout << "v5 size: " << v5.size() << endl;
+
   vector<string> v6{10}; // 长度 10，每个值为 空 string 对象
+  cout << "v6 size: " << v6.size() << endl;
+
   vector<string> v7{10, "hi"}; // 长度 10，每个值为 "hi"
+  cout << "v7 size: " << v7.size() << endl;
+
+  return 0;
+}
+
+int p3_14 () {
+  vector<int> inputVec;
+  int intNum;
+  while (cin >> intNum) {
+    inputVec.push_back(intNum);
+  }
+  for (auto i : inputVec) {
+    cout << i << endl;
+  }
+
+  return 0;
+}
+
+int p3_15 () {
+  vector<string> inputVec;
+  string str;
+  while (cin >> str) {
+    inputVec.push_back(str);
+  }
+  string ans = "";
+  for (auto t : inputVec) {
+    ans += t + ",";
+  }
+  cout << ans << endl;
+  return 0;
+}
+
+int p3_17 () {
+  vector<string> strVec;
+  string str;
+  while (cin >> str) {
+    for (auto &w : str) {
+      w = toupper(w);
+    }
+    strVec.push_back(str);
+  }
+  string ans = "";
+  for (auto &word : strVec) {
+    ans += word + " ";
+  }
+  cout << ans << endl;
+  return 0;
+}
+
+int p3_18 () {
+  vector<int> ivec;
+  // ivec[0] = 42; ❌ 不合法
+  // 修改成
+  ivec.push_back(42);
+  return 0;
+}
+
+int p3_19 () {
+  vector<int> ivec1(10, 42);
+  vector<int> ivec2{42, 42, 42, 42, 42, 42, 42, 42, 42, 42};
+  vector<int> ivec3;
+  while (ivec3.size() < 10) {
+    ivec3.push_back(42);
+  }
+  return 0;
+}
+
+int p3_20 () {
+  vector<int> ivec{123, 234, 456, 567, 678, 789, 890, 901};
+  vector<int> reverseSumVec;
+  int i = 0;
+  while (i < ivec.size()) {
+    cout << ivec[i] + ivec[i + 1] << ", ";
+    i++;
+  }
+
+  cout << endl;
+
+  int j = 0;
+  int len = ivec.size();
+  while (j < len / 2) {
+    cout << ivec[j] + ivec[len - j - 1] << ", ";
+    j++;
+  }
+
+  cout << endl;
   return 0;
 }
 
@@ -152,7 +250,13 @@ int main () {
   p3_10();
   p3_11();
   p3_12();
-  p3_13();
+  p3_13_16();
+  p3_14();
+  p3_15();
+  p3_17();
+  p3_18();
+  p3_19();
+  p3_20();
 
   return 0;
 }
