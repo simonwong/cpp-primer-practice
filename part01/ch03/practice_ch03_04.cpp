@@ -105,12 +105,52 @@ int p3_26 () {
   return 0;
 }
 
+int txt_size() {
+  return 1;
+}
+
+int p3_27 () {
+  unsigned buf_size = 1024;
+  // a
+  int ia[buf_size]; // ❌ 不合法 buf_size 必须是常量
+  // b
+  int ib[4 * 7 - 14]; // 合法
+  // c
+  int ic[txt_size()]; // ❌ 不合法, txt_size() 的结果需要在运行时才能知道
+  // d
+  // char st[11] = "fundamental"; ❌ 不合法，需要考虑字符串最后的空字符，长度应该为 12
+
+  return 0;
+}
+
+int p3_28 () {
+  // string sa[10]; // 全是空字符串
+  // int ia[10]; // 全是 0
+  // int main () {
+  //   string sa2[10]; // 全是空字符串
+  //   int ia2[10]; // 全是未定义
+  // }
+
+  return 0;
+}
+
+int p3_29 () {
+  // 数组的缺点
+  // 1. 必须要预先知道长度
+  // 2. 不能随意增加元素
+  // 3. 不允许拷贝和赋值
+  return 0;
+}
+
 int main () {
   p3_21_22();
   p3_23();
   p3_24();
   p3_25();
   p3_26();
+  p3_27();
+  // p3_28();
+  // p3_29();
 
   return 0;
 }
