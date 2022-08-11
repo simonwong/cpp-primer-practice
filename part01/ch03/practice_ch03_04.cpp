@@ -142,6 +142,61 @@ int p3_29 () {
   return 0;
 }
 
+int p3_30_31 () {
+  constexpr size_t array_size = 10;
+  int ia[array_size];
+  //                  ix <= array_size <= 会溢出
+  for (size_t ix = 0; ix < array_size; ix++) {
+    ia[ix] = ix;
+  }
+
+  return 0;
+}
+
+int p3_32 () {
+  // 数组拷贝
+  constexpr size_t size = 10;
+  int ia_origin[size] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+  int ia_copy[size];
+
+  for (size_t i = 0; i < size; i++) {
+    ia_copy[i] = ia_origin[i];
+  }
+
+  // vector 拷贝
+  vector<int> iv_origin = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+  vector<int> iv_copy(iv_origin);
+
+  return 0;
+}
+
+int p3_33 () {
+  // 不初始化，数组的元素将都会为未定义
+  return 0;
+}
+
+int p3_34 () {
+  // p1 += p2 - p1
+  // p2 - p1 得到差值，然后 p1 加上差值。
+  // 实际上就只 p1 指针移动到 p2 指针位置。
+  // 怎样都会合法
+  return 0;
+}
+
+int p3_35 () {
+  int arr[] = {1, 2, 3, 4, 5, 6, 7};
+
+  for (auto i = std::begin(arr); i != std::end(arr); i++) {
+    *i = 0;
+  }
+  for (auto i : arr) {
+    cout << i << endl;
+  }
+
+  return 0;
+}
+
+
 int main () {
   p3_21_22();
   p3_23();
@@ -151,6 +206,12 @@ int main () {
   p3_27();
   // p3_28();
   // p3_29();
+  p3_30_31();
+  p3_32();
+  // p3_33();
+  // p3_34();
+  p3_35();
+  p3_36();
 
   return 0;
 }
