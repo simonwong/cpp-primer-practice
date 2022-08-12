@@ -196,6 +196,42 @@ int p3_35 () {
   return 0;
 }
 
+int p3_36 () {
+  // 判断两个数组是否相等
+  int arr_1[] = {1, 2, 3, 4, 5, 6, 7};
+  int arr_2[] = {1, 2, 3, 4, 5, 6, 7};
+
+  auto start_1 = std::begin(arr_1);
+  auto end_1 = std::end(arr_1);
+  auto start_2 = std::begin(arr_2);
+  auto end_2 = std::end(arr_2);
+
+  while (start_1 != end_1 && start_2 != end_2) {
+    cout << *start_1 << *start_2 << endl;
+    if (*start_1 == *start_2) {
+      start_1++;
+      start_2++;
+    } else {
+      cout << "数组不相等" << endl;
+      return -1;
+    }
+  }
+  cout << "数组相等" << endl;
+
+  // 判断两个 vector 是否相等
+  vector<int> vec_1 = {1, 2, 3, 4, 5, 6, 7};
+  vector<int> vec_2 = {1, 2, 3, 4, 5, 6, 7};
+
+  if (vec_1 == vec_2) {
+    cout << "vector 不相等" << endl;
+    return -1;
+  }
+
+  cout << "vector 相等" << endl;
+
+  return 0;
+}
+
 
 int main () {
   p3_21_22();
