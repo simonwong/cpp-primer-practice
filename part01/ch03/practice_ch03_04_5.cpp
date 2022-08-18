@@ -232,6 +232,65 @@ int p3_36 () {
   return 0;
 }
 
+int p3_37 () {
+  const char ca[] = {'h', 'e', 'l', 'l', '0'};
+  const char *cp = ca; // 得到 ca 第一个元素的指针
+  while (*cp) {
+    cout << *cp << endl; // 打印 'h'
+    ++cp; // 因为没有空字符串，所以不会停止循环
+  }
+
+  return 0;
+}
+
+int p3_38 () {
+  // 两个指针相加很可能会超出范围
+
+  // 两只指针相减得到指针距离
+  // 指针加一个整数，即移动 n 位
+  // 两指针相加没有现实意义
+
+  return 0;
+}
+
+int p3_39 () {
+  string strA = "hello";
+  string strB = "hello";
+
+  // 比较 string 对象
+  if (strA == strB) {
+    cout << "string 对象 相等" << endl;
+  } else {
+    cout << "string 对象 不相等" << endl;
+  }
+
+  // 比较 c 风格字符串内容
+  char cStrA[] = "hello";
+  char cStrB[] = "hello";
+  if (std::strcmp(cStrA, cStrB) == 0) {
+    cout << "c 风格字符串内容 相等" << endl;
+  } else {
+    cout << "c 风格字符串内容 不相等" << endl;
+  }
+
+  return 0;
+}
+
+int p3_40 () {
+  const char cStrA[] = "hello";
+  const char cStrB[] = "world";
+
+  size_t resLen = std::strlen(cStrA) + std::strlen(" ") + std::strlen(cStrB);
+  char sStrRes[resLen];
+  std::strcpy(sStrRes, cStrA);
+  std::strcat(sStrRes, " ");
+  std::strcat(sStrRes, cStrB);
+
+  cout << sStrRes << endl;
+
+  return 0;
+}
+
 
 int main () {
   p3_21_22();
@@ -248,6 +307,10 @@ int main () {
   // p3_34();
   p3_35();
   p3_36();
+  p3_37();
+  // p3_38();
+  p3_39();
+  p3_40();
 
   return 0;
 }
