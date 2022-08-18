@@ -291,6 +291,166 @@ int p3_40 () {
   return 0;
 }
 
+// 练习3.41：编写一段程序，用整型数组初始化一个vector对象。
+int p3_41 () {
+  int intArr[] = {1, 2, 3, 4, 5};
+  vector<int> vecArr;
+  auto *start = std::begin(intArr);
+  auto *end = std::end(intArr);
+  while (start != end) {
+    vecArr.push_back(*start);
+    start++;
+  }
+  for (auto v : vecArr) {
+    cout << v << endl;
+  }
+  return 0;
+}
+
+// 练习3.42：编写一段程序，将含有整数元素的 vector 对象拷贝给一个整型数组。
+int p3_42 () {
+  vector<int> vecArr = {5, 4, 3, 3, 2, 1};
+  size_t len = vecArr.size();
+  int intArr[len];
+
+  for (size_t i = 0; i < vecArr.size(); i++) {
+    intArr[i] = vecArr[i];
+  }
+
+  for (auto v : intArr) {
+    cout << v << endl;
+  }
+
+  return 0;
+}
+
+/**
+ * 练习3.43：编写3个不同版本的程序，令其均能输出ia的元素。
+ * 版本1使用范围for语句管理迭代过程；
+ * 版本2和版本3都使用普通的for语句，其中版本2要求用下标运算符，版本3要求用指针。
+ * 此外，在所有3个版本的程序中都要直接写出数据类型，而不能使用类型别名、auto关键字或decltype关键字。
+ */
+int p3_43 () {
+  int ia[3][4] = {
+    { 0, 1, 2, 3 },
+    { 4, 5, 6, 7 },
+    { 8, 9, 10, 11 },
+  };
+
+  cout << "version 1:" << endl;
+  for (int (&row)[4]: ia) {
+    for (int el: row) {
+      cout << el << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 2:" << endl;
+  for (size_t i = 0; i < std::size(ia); i++) {
+    int (&row)[4] = ia[i];
+
+    for (size_t j = 0; j < std::size(row); j++) {
+      cout << row[j] << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 3:" << endl;
+  for (int (*rowBegin)[4] = std::begin(ia); rowBegin != std::end(ia); rowBegin++) {
+    for (int *el = std::begin(*rowBegin); el != std::end(*rowBegin); el++) {
+      cout << *el << ",";
+    }
+  }
+  cout << endl;
+
+  return 0;
+}
+
+/**
+ * 练习3.44：改写上一个练习中的程序，使用类型别名来代替循环控制变量的类型。
+ */
+int p3_44 () {
+  int ia[3][4] = {
+    { 0, 1, 2, 3 },
+    { 4, 5, 6, 7 },
+    { 8, 9, 10, 11 },
+  };
+
+  typedef int TypeRow[4];
+  typedef TypeRow &RefRow;
+  typedef TypeRow *PointRow;
+  // typedef int (&RefRow)[4];
+  // typedef int (*PointRow)[4];
+
+  cout << "version 1:" << endl;
+  for (RefRow row: ia) {
+    for (int el: row) {
+      cout << el << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 2:" << endl;
+  for (size_t i = 0; i < std::size(ia); i++) {
+    RefRow row = ia[i];
+
+    for (size_t j = 0; j < std::size(row); j++) {
+      cout << row[j] << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 3:" << endl;
+  for (PointRow rowBegin = std::begin(ia); rowBegin != std::end(ia); rowBegin++) {
+    for (int *el = std::begin(*rowBegin); el != std::end(*rowBegin); el++) {
+      cout << *el << ",";
+    }
+  }
+  cout << endl;
+
+  return 0;
+}
+
+/**
+ * 练习3.45：再一次改写程序，这次使用auto关键字。
+ */
+int p3_45 () {
+  int ia[3][4] = {
+    { 0, 1, 2, 3 },
+    { 4, 5, 6, 7 },
+    { 8, 9, 10, 11 },
+  };
+
+
+  cout << "version 1:" << endl;
+  for (auto &row: ia) {
+    for (int el: row) {
+      cout << el << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 2:" << endl;
+  for (size_t i = 0; i < std::size(ia); i++) {
+    auto &row = ia[i];
+
+    for (size_t j = 0; j < std::size(row); j++) {
+      cout << row[j] << ",";
+    }
+  }
+  cout << endl;
+
+  cout << "version 3:" << endl;
+  for (auto rowBegin = ia; rowBegin != ia + 3; rowBegin++) {
+    for (auto el = *rowBegin; el != *rowBegin + 4; el++) {
+      cout << *el << ",";
+    }
+  }
+  cout << endl;
+
+  return 0;
+}
+
 
 int main () {
   p3_21_22();
@@ -311,6 +471,11 @@ int main () {
   // p3_38();
   p3_39();
   p3_40();
+  p3_41();
+  p3_42();
+  p3_43();
+  p3_44();
+  p3_45();
 
   return 0;
 }
