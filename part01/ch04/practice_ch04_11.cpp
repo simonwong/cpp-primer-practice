@@ -48,9 +48,56 @@ int p4_35 () {
   return 0;
 }
 
+/**
+ * 练习4.36：假设i是int类型，d是double类型，书写表达式i＊=d使其执行整数类型的乘法而非浮点类型的乘法。
+ */
+int p4_36 () {
+  int i = 1;
+  double d = 2.4;
+  i *= static_cast<int>(d);
+
+  cout << i << endl;
+  return 0;
+}
+
+/**
+ * 练习4.37：用命名的强制类型转换改写下列旧式的转换语句。
+ */
+int p4_37 () {
+  int i; double d; const string *ps; char *pc; void *pv;
+
+  // a
+  // pv = (void*)ps;
+  pv = static_cast<void*>(const_cast<string*>(ps));
+  // b
+  // i = int(*pc);
+  i = static_cast<int>(*pc);
+  // c
+  // pv = &d;
+  pv = static_cast<void*>(&d);
+  // d
+  // pc = (char*) pv;
+  pc = static_cast<char*>(pv);
+  return 0;
+}
+
+/**
+ * 练习4.38：说明下面这条表达式的含义。
+ */
+int p4_38 () {
+  int j = 3;
+  int i = 2;
+  // j / i 的结果强制类型转为 double 类型
+  double slope = static_cast<double>(j / i);
+  return 0;
+}
+
 int main () {
   p4_34();
   p4_35();
+  p4_36();
+  p4_37();
+  p4_38();
 
   return 0;
 }
