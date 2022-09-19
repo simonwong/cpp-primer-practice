@@ -96,11 +96,63 @@ bool p5_17 () {
   return true;
 }
 
+int get_response () {
+  return 1;
+}
+
+/**
+ * 练习5.18：说明下列循环的含义并改正其中的错误。
+ */
+int p5_18 () {
+  // a
+  // do 需要添加花括号
+  do {
+    int v1, v2;
+    cout << "Please enter two numbers to sum:";
+    if (cin >> v1 >> v2) {
+      cout << "Sum is" << v1 + v2 << endl;
+    }
+ } while (cin);
+
+  // b
+  // ival 要放在 do while 外面
+  int ival;
+  do {
+  } while (ival = get_response());
+
+  // c
+  // ival 要放在 do while 外面
+  int ival2;
+  do {
+    ival2 = get_response();
+  } while (ival2);
+  return 0;
+}
+
+/**
+ * 练习5.19：编写一段程序，使用do while循环重复地执行下述任务：首先提示用户输入两个string对象，然后挑出较短的那个并输出它。
+ */
+int p5_19 () {
+  do
+  {
+    cout << "请输入两个字符串" << endl;
+    string s1, s2;
+    if (cin >> s1 >> s2) {
+      cout << "较短字符串为";
+      cout << (s1.size() < s2.size() ? s1 : s2) << endl; // 没有考虑相等
+    }
+  } while (cin);
+
+  return 0;
+}
+
 int main () {
   p5_14();
   p5_15();
   p5_16();
   p5_17();
+  p5_18();
+  p5_19();
 
   return 0;
 }
