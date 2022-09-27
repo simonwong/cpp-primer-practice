@@ -88,6 +88,39 @@ void p6_05 (void) {
   cout << "-8 的绝对值为" << ar2 << endl;
 }
 
+/**
+ * 练习6.6：说明形参、局部变量以及局部静态变量的区别。编写一个函数，同时用到这三种形式。
+ */
+int more_params (int v) {
+  int a = 6;
+  static int b = 7;
+  cout << "形参 v：" << v << endl;
+  cout << "局部变量 a：" << a << endl;
+  cout << "局部静态变量 b：" << b << endl;
+
+  return b;
+}
+void p6_06 () {
+  int res = more_params(2);
+  cout << "res + 1 (局部静态变量 b + 1)：" << ++res << endl;
+}
+
+/**
+ * 练习6.6：说明形参、局部变量以及局部静态变量的区别。编写一个函数，同时用到这三种形式。
+ */
+int static_test () {
+  static int count = 0;
+
+  cout << "局部静态变量 count：" << ++count << endl;
+
+  return count;
+}
+void p6_07 () {
+  static_test();
+  static_test();
+  static_test();
+}
+
 
 int main () {
   // p6_01();
@@ -95,6 +128,8 @@ int main () {
   p6_03();
   p6_04();
   p6_05();
+  p6_06();
+  p6_07();
 
   return 0;
 }
