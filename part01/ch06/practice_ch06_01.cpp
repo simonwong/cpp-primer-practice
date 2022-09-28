@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Chapter6.h"
 
 using std::cout;
 using std::cin;
@@ -121,6 +122,30 @@ void p6_07 () {
   static_test();
 }
 
+/**
+ * 练习6.6：说明形参、局部变量以及局部静态变量的区别。编写一个函数，同时用到这三种形式。
+ */
+void print (vector<int>::const_iterator beg, vector<int>::const_iterator end) {
+  while (beg != end) {
+    cout << *(beg++) << endl;
+  }
+}
+void p6_08 () {
+  vector<int> v = {1,2,3,4,5};
+
+  print(v.begin(), v.end());
+}
+
+/**
+ * 练习6.9：编写你自己的 fact.cc 和 factMain.cc，
+ * 这两个文件都应该包含上一小节的练习中编写的Chapter6.h头文件。
+ * 通过这些文件，理解你的编译器是如何支持分离式编译的。
+ */
+void p6_09 () {
+  // 见同目录下的 fact.cc 和 factMain.cc
+  // 执行 clang++ -std=c++17 factMain.cc fact.cc
+}
+
 
 int main () {
   // p6_01();
@@ -130,6 +155,8 @@ int main () {
   p6_05();
   p6_06();
   p6_07();
+  p6_08();
+  // p6_09();
 
   return 0;
 }
