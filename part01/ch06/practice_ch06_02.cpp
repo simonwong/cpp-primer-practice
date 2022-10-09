@@ -163,14 +163,14 @@ int count(const string &, char);
 int sum(vector<int>::iterator, vector<int>::iterator, int);
 void p6_19 () {
   vector<int> vec(10);
-  // a
-  calc(24.4 /**, 55.1*/); // ❌ 多传了参数
-  // b
-  count("abcda", 'a'); // 没问题
-  // c
-  calc(66); // 没问题
-  // d
-  sum(vec.begin(), vec.end(), 3.8); // ❌  double 会被转为 int
+  // // a
+  // calc(24.4 /**, 55.1*/); // ❌ 多传了参数
+  // // b
+  // count("abcda", 'a'); // 没问题
+  // // c
+  // calc(66); // 没问题
+  // // d
+  // sum(vec.begin(), vec.end(), 3.8); // double 会被转为 int
 }
 
 /**
@@ -179,6 +179,87 @@ void p6_19 () {
 void p6_20 () {
   // 不被修改，允许使用字符串字面值时使用常量引用
   // 可能会被修改
+}
+
+/**
+ * 练习6.21：编写一个函数，令其接受两个参数：一个是int型的数，另一个是int指针。
+ * 函数比较int的值和指针所指的值，返回较大的那个。在该函数中指针的类型应该是什么？
+ */
+int compareNum(int a, int *b) {
+  if (a > *b) {
+    return a;
+  }
+  return *b;
+}
+void p6_21 () {
+  int a = 5;
+  int b = 6;
+
+  cout << "比较大值结果：" << compareNum(a, &b) << endl;
+}
+
+/**
+ * 练习6.22：编写一个函数，令其交换两个int指针。
+ */
+void switchIntPoint(int *&a, int *&b) {
+  auto temp = a;
+  a = b;
+  b = temp;
+}
+void p6_22 () {
+  int a = 5;
+  int b = 6;
+  int *ap = &a;
+  int *bp = &b;
+
+  switchIntPoint(ap, bp);
+  cout << "ap：" << *ap << "; bp：" << *bp << endl;
+  cout << "a：" << a << "; b：" << b << endl;
+}
+
+/**
+ * 练习6.23：参考本节介绍的几个print函数，根据理解编写你自己的版本。依次调用每个函数使其输入下面定义的i和j：
+ * int i = 0, j[2] = {0, 1};
+ */
+void print(const int *beg, const int *end) {
+  while (beg != end) {
+    cout << *beg << endl;
+    beg++;
+  }
+}
+void print(int (&arr)[2]) {
+  for (auto i : arr) {
+    cout << i << endl;
+  }
+}
+void print(const int arr[], const size_t size) {
+  for (size_t i = 0; i < size; ++i) {
+    cout << arr[i] << endl;
+  }
+}
+void print(const int *n) {
+  cout << *n << endl;
+}
+void p6_23 () {
+  int i = 0, j[2] = {0, 1};
+  print(std::begin(j), std::end(j));
+  print(j);
+  print(j, std::size(j));
+  print(&i);
+}
+
+/**
+ * 练习6.24：描述下面这个函数的行为。如果代码中存在问题，请指出并改正。
+ */
+void print (const int (&ia)[10]) {
+  for (size_t i = 0; i != 10; ++i) {
+    cout << ia[i] << endl;
+  }
+}
+void p6_24 () {
+  // 形参 ia 加上一个 &。
+  int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+  print(arr);
 }
 
 int main () {
@@ -193,6 +274,10 @@ int main () {
   p6_18();
   p6_19();
   p6_20();
+  p6_21();
+  p6_22();
+  p6_23();
+  p6_24();
 
   return 0;
 }
