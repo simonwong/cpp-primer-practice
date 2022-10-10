@@ -9,6 +9,7 @@ using std::string;
 using std::vector;
 using std::endl;
 using std::getline;
+using std::initializer_list;
 
 /**
  * 练习6.10：编写一个函数，使用指针形参交换两个整数的值。在代码中调用该函数并输出交换后的结果，以此验证函数的正确性。
@@ -262,6 +263,46 @@ void p6_24 () {
   print(arr);
 }
 
+/**
+ * 练习6.25：编写一个main函数，令其接受两个实参。把实参的内容连接成一个string对象并输出出来。
+ */
+/**
+ * 练习6.26：编写一个程序，使其接受本节所示的选项；输出传递给main函数的实参的内容。
+ */
+void p6_25_26 () {
+  // 见 p6_25_26_main.cpp
+}
+
+/**
+ * 练习6.27：编写一个函数，它的参数是initializer_list<int>类型的对象，函数的功能是计算列表中所有元素的和。
+ */
+int sumMore (initializer_list<int> intList) {
+  int res = 0;
+  for (auto num : intList) {
+    res += num;
+  }
+  return res;
+}
+void p6_27 () {
+  // 见 p6_25_26_main.cpp
+  int res = sumMore({ 1, 2, 3, 4, 5, 6 });
+  cout << "合计结果" << res << endl;
+}
+
+/**
+ * 练习6.28：在error_msg函数的第二个版本中包含ErrCode类型的参数，其中循环内的elem是什么类型？
+ */
+void p6_28 () {
+  // const string & 类型
+}
+
+/**
+ * 练习6.29：在范围for循环中使用initializer_list对象时，应该将循环控制变量声明成引用类型吗？为什么？
+ */
+void p6_29 () {
+  // 需要使用 常量引用
+}
+
 int main () {
   p6_10();
   p6_11();
@@ -278,6 +319,10 @@ int main () {
   p6_22();
   p6_23();
   p6_24();
+  // p6_25_26();
+  p6_27();
+  p6_28();
+  p6_29();
 
   return 0;
 }
