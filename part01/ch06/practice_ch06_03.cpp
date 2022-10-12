@@ -90,6 +90,47 @@ void p6_34_35 () {
   // val-- 会改变 val 的值
 }
 
+/**
+ * 练习6.36：编写一个函数的声明，使其返回数组的引用并且该数组包含10个string对象。
+ * 不要使用尾置返回类型、decltype或者类型别名。
+ *
+ * 练习6.37：为上一题的函数再写三个声明，
+ * 一个使用类型别名，
+ * 另一个使用尾置返回类型，
+ * 最后一个使用decltype关键字。你觉得哪种形式最好？为什么？
+ */
+string (*getStringArr(int i))[10];
+
+// typedef
+typedef string StringArr[10];
+StringArr *getStringArr(int i);
+
+// 尾置
+auto getStringArr(int i) -> string(*)[10];
+
+// decltype
+string myStrArr[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+decltype(myStrArr) *getStringArr(int i);
+
+void p6_36_37 () {
+  // empty
+}
+
+/**
+ * 练习6.38：修改arrPtr函数，使其返回数组的引用。
+ */
+int odd[] = {1,3,5,7,9};
+int even[] = {0,2,4,6,8};
+
+decltype(odd) &arrPtr(int i) {
+  return (i % 2) ? odd : even;
+}
+
+void p6_38 () {
+  auto res = arrPtr(5);
+  cout << *res << endl;
+}
+
 
 int main () {
   // p6_30();
@@ -97,6 +138,8 @@ int main () {
   p6_32();
   p6_33();
   p6_34_35();
+  // p6_36_37()
+  p6_38();
 
   return 0;
 }
