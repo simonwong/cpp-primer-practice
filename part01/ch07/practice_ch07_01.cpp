@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Chapter6.h"
+#include "Sales_data_02.h"
+#include "Sales_data_11.h"
+#include "Person_15.h"
 
 using std::cout;
 using std::cin;
@@ -47,25 +49,11 @@ int p7_01 () {
  *
  * 练习7.3：修改7.1.1节（第229页）的交易处理程序，令其使用这些成员。
  */
-struct Sales_data {
-  string isbn() const { return bookNo; };
-  Sales_data& combine(const Sales_data&);
-
-  string bookNo;
-  unsigned units_sold = 0;
-  double revenue = 0;
-};
-Sales_data& Sales_data::combine(const Sales_data& rhs) {
-  units_sold += rhs.units_sold;
-  revenue += rhs.revenue;
-  return *this;
-}
-
 int p7_02_03 () {
-  Sales_data total;
+  Sales_data_02 total;
 
   if (cin >> total.bookNo >> total.units_sold >> total.revenue) {
-    Sales_data trans;
+    Sales_data_02 trans;
 
     while (cin >> trans.bookNo >> trans.units_sold >> trans.revenue) {
       if (total.isbn() == trans.isbn()) {
@@ -106,27 +94,27 @@ void p7_04_05 () {
  *
  * 练习7.7：使用这些新函数重写7.1.2节（第233页）练习中的交易处理程序。
  */
-std::istream &read(std::istream &is, Sales_data &item) {
+std::istream &read(std::istream &is, Sales_data_02 &item) {
   double price = 0;
   is >> item.bookNo >> item.units_sold >> price;
   item.revenue = price * item.units_sold;
   return is;
 }
-std::ostream &print(std::ostream &os, const Sales_data &item) {
+std::ostream &print(std::ostream &os, const Sales_data_02 &item) {
   os << item.isbn() << " " << item.units_sold << " " << item.revenue;
   return os;
 }
-Sales_data add(const Sales_data &lhs, const Sales_data &rhs) {
-  Sales_data sum = lhs;
+Sales_data_02 add(const Sales_data_02 &lhs, const Sales_data_02 &rhs) {
+  Sales_data_02 sum = lhs;
   sum.combine(rhs);
   return sum;
 }
 
 int p7_06_07 () {
-  Sales_data total;
+  Sales_data_02 total;
 
   if (read(cin, total)) {
-    Sales_data trans;
+    Sales_data_02 trans;
 
     while (read(cin, trans)) {
       if (total.isbn() == trans.isbn()) {
@@ -181,7 +169,71 @@ void p7_10 () {
   // 相当于 cin >> data1 >> data2
 }
 
+/**
+ * 练习7.11：在你的Sales_data类中添加构造函数，然后编写一段程序令其用到每个构造函数。
+ *
+ * 练习7.12：把只接受一个istream作为参数的构造函数定义移到类的内部。
+ */
+void p7_11_12 () {
+  Sales_data_11 data1;
+  print(cout, data1) << endl;
 
+  Sales_data_11 data2("123");
+  print(cout, data2) << endl;
+
+  Sales_data_11 data3("123", 3, 20.0);
+  print(cout, data3) << endl;
+
+  Sales_data_11 data4(cin);
+  print(cout, data4) << endl;
+}
+
+/**
+ * 练习7.13：使用istream构造函数重写第229页的程序。
+ */
+int p7_13 () {
+  Sales_data_11 total(cin);
+
+  if (!total.isbn().empty()) {
+    std::istream &is = cin;
+
+    while (is) {
+      Sales_data_11 trans(is);
+
+      if (!is) {
+        break;
+      }
+
+      if (total.isbn() == trans.isbn()) {
+        total.combine(trans);
+      } else {
+        print(cout, total) << std::endl;
+        total = trans;
+      }
+    }
+    print(cout, total) << std::endl;
+  } else {
+    std::cerr << "No data?" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+/**
+ * 练习7.14：编写一个构造函数，令其用我们提供的类内初始值显式地初始化成员。
+ */
+void p7_14 () {
+  // Sales_data_11(): bookNo(""), units_sold(0), revenue(0) {};
+}
+
+/**
+ * 练习7.15：为你的Person类添加正确的构造函数。
+ */
+void p7_15 () {
+  Person_15 person("Aston", "Singapore");
+
+  cout << person.getName() << " " << person.getAddress() << endl;
+}
 
 int main () {
   p7_01();
@@ -191,6 +243,10 @@ int main () {
   p7_08();
   p7_09();
   p7_10();
+  p7_11_12();
+  p7_13();
+  p7_14();
+  p7_15();
 
   return 0;
 }
