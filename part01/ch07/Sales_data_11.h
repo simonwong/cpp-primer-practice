@@ -6,8 +6,8 @@
 
 struct Sales_data_11 {
   Sales_data_11() = default;
-  Sales_data_11(const string &s): bookNo(s) {};
-  Sales_data_11(const string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p * n) {};
+  Sales_data_11(const std::string &s): bookNo(s) {};
+  Sales_data_11(const std::string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p * n) {};
   Sales_data_11(std::istream &is) { read(is, *this); };
 
   std::string isbn() const { return bookNo; };
