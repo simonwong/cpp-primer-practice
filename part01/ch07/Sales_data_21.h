@@ -19,6 +19,9 @@ public:
   Sales_data_21& combine(const Sales_data_21&);
 
 private:
+  inline double avg_price() const;
+
+private:
   std::string bookNo;
   unsigned units_sold = 0;
   double revenue = 0.0;
@@ -53,6 +56,11 @@ Sales_data_21 add(const Sales_data_21 &lhs, const Sales_data_21 &rhs)
   sum.combine(rhs);
 
   return sum;
+}
+
+inline
+double Sales_data_21::avg_price() const {
+  return units_sold ? revenue / units_sold : 0;
 }
 
 #endif
