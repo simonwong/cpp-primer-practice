@@ -1,5 +1,5 @@
-#ifndef Screen_23_h
-#define Screen_23_h
+#ifndef Screen_23_24_h
+#define Screen_23_24_h
 
 #include <iostream>
 #include <string>
