@@ -81,6 +81,12 @@ class Y {
 void p7_31 () {
 }
 
+/**
+ * 练习7.32：定义你自己的Screen和Window_mgr，其中clear是Window_mgr的成员，是Screen的友元。
+ */
+void p7_32 () {
+}
+
 int main () {
   p7_23_24();
   // p7_25();
@@ -89,6 +95,7 @@ int main () {
   // p7_28_29();
   // p7_30();
   // p7_31();
+  p7_32();
 
   return 0;
 }
