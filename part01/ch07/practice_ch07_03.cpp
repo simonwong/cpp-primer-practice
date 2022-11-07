@@ -87,6 +87,18 @@ void p7_31 () {
 void p7_32 () {
 }
 
+/**
+ * 练习7.33：如果我们给Screen添加一个如下所示的size成员将发生什么情况？如果出现了问题，请尝试修改它。
+ */
+// Screen_32::pos Screen_32::size() const {
+//   return height * width;
+// }
+void p7_33 () {
+  // 如上，需要添加 Screen_32::，pos 是定义在 Screen_32 内的类型
+}
+
+
+
 int main () {
   p7_23_24();
   // p7_25();
@@ -96,6 +108,7 @@ int main () {
   // p7_30();
   // p7_31();
   p7_32();
+  // p7_33();
 
   return 0;
 }
