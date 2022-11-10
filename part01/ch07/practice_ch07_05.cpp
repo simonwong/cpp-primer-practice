@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Sales_data_41.h"
 
 using std::cout;
 using std::cin;
@@ -70,6 +71,40 @@ void p7_40 () {
   cout << curDate.getDate() << endl;
 }
 
+/**
+ * 练习7.41：使用委托构造函数重新编写你的Sales_data类，给每个构造函数体添加一条语句，
+ * 令其一旦执行就打印一条信息。
+ * 用各种可能的方式分别创建Sales_data对象，认真研究每次输出的信息直到你确实理解了委托构造函数的执行顺序。
+ */
+void p7_41 () {
+  // 会先执行委托构造函数，再执行当前的构造函数
+  cout << "1: " << endl;
+  Sales_data_41 salesData1;
+  cout << "2: " << endl;
+  Sales_data_41 salesData2("book-001");
+}
+
+/**
+ * 练习7.42：对于你在练习7.40（参见7.5.1节，第261页）中编写的类，确定哪些构造函数可以使用委托。如果可以的话，编写委托构造函数。
+ * 如果不可以，从抽象概念列表中重新选择一个你认为可以使用委托构造函数的，为挑选出的这个概念编写类定义。
+ */
+class MyDate2 {
+public:
+  MyDate2(string y, string m, string d): year(y), month(m), date(d) {};
+  MyDate2(): MyDate2("1900", "01", "01") {};
+
+  string getDate () {
+    return year + "-" + month + "-" + date;
+  }
+
+private:
+  string year;
+  string month;
+  string date;
+};
+void p7_42 () {
+}
+
 
 int main () {
   // p7_36();
@@ -77,6 +112,8 @@ int main () {
   // p7_38();
   // p7_39();
   p7_40();
+  p7_41();
+  // p7_42();
 
   return 0;
 }
