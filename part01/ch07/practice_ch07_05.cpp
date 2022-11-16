@@ -189,6 +189,72 @@ void p7_49 () {
   // 不能使用 尾部的 const ，因为它禁止数据成员发生改变。
 }
 
+/**
+ * 练习7.50：确定在你的Person类中是否有一些构造函数应该是explicit的。
+ */
+void p7_50 () {
+  // 没有一个实参的构造函数，不需要加
+}
+
+/**
+ * 练习7.51：vector将其单参数的构造函数定义成explicit的，而string则不是，你觉得原因何在？
+ */
+void p7_51 () {
+  // vector 单参数意义不大，大部分 vector 都是 size 大于 1 的，而且用起来会比较迷惑
+  // string 单参数是非常自然的
+}
+
+/**
+ * 练习7.52：使用2.6.1节（第64页）的Sales_data类，解释下面的初始化过程。如果存在问题，尝试修改它。
+ */
+// 2.6.1 的 Sales_data 有类内初始化、构造函数
+struct Sales_data_52 {
+  string bookNo;
+  unsigned units_sold;
+  double revenue;
+};
+
+void p7_52 () {
+  Sales_data_52 item = {"999-99-99", 25, 12.55};
+}
+
+/**
+ * 练习7.53：定义你自己的Debug。
+ */
+class Debug {
+public:
+  constexpr Debug(bool b = true): hw(b), io(b), other(b) {}
+  constexpr Debug(bool h, bool i, bool o): hw(h), io(i), other(o) {}
+  constexpr bool any () {
+    return hw || io || other;
+  }
+
+  void set_io (bool b) { io = b; }
+  void set_hw (bool b) { hw = b; }
+  void set_other (bool b) { other = b; }
+
+private:
+  bool hw;
+  bool io;
+  bool other;
+};
+
+void p7_53 () {
+}
+
+/**
+ * 练习7.54：Debug中以set_开头的成员应该被声明成constexpr吗？如果不，为什么？
+ */
+void p7_54 () {
+}
+
+/**
+ * 练习7.55：7.5.5节（第266页）的Data类是字面值常量类吗？请解释原因。
+ */
+void p7_55 () {
+  // 不是，string 不是字面值
+}
+
 
 int main () {
   // p7_36();
@@ -205,6 +271,12 @@ int main () {
   // p7_47();
   // p7_48();
   // p7_49();
+  // p7_50();
+  // p7_51();
+  // p7_52();
+  // p7_53();
+  // p7_54();
+  // p7_55();
 
   return 0;
 }
