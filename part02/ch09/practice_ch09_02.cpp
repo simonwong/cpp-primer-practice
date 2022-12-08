@@ -78,12 +78,53 @@ void p9_06 () {
   }
 }
 
+/**
+ * 练习9.7：为了索引int的vector中的元素，应该使用什么类型？
+ */
+void p9_07 () {
+  // vector<int>::size_type
+}
+
+/**
+ * 练习9.8：为了读取string的list中的元素，应该使用什么类型？
+ * 如果写入list，又该使用什么类型？
+ */
+void p9_08 () {
+  // list<string>::const_iterator
+  // list<int>::iterator
+}
+
+/**
+ * 练习9.8：为了读取string的list中的元素，应该使用什么类型？
+ * 如果写入list，又该使用什么类型？
+ */
+void p9_09 () {
+  // begin 是可写入的
+  // cbegin const 成员，是只读的
+}
+
+/**
+ * 练习9.10：下面4个对象分别是什么类型？
+ */
+void p9_10 () {
+  vector<int> v1;
+  const vector<int> v2;
+
+  auto it1 = v1.begin(); // vector<int>::iterator
+  auto it2 = v2.begin(); // vector<int>::const_iterator
+  auto it3 = v1.cbegin(), it4 = v2.cbegin(); // vector<int>::const_iterator
+}
+
 int main (int argc, char **argv) {
   p9_02();
   // p9_03();
   p9_04();
   p9_05();
   p9_06();
+  // p9_07();
+  // p9_08();
+  // p9_09();
+  // p9_10();
 
   return 0;
 }
