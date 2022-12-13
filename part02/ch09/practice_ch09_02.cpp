@@ -115,6 +115,51 @@ void p9_10 () {
   auto it3 = v1.cbegin(), it4 = v2.cbegin(); // vector<int>::const_iterator
 }
 
+/**
+ * 练习9.11：对6种创建和初始化vector对象的方法，每一种都给出一个实例。解释每个vector包含什么值。
+ */
+void p9_11 () {
+  // 默认构造函数。v1 为空
+  vector<int> v1;
+
+  // 列表初始化，v2 包含 1，2
+  vector<int> v2_1{1, 2};
+  vector<int> v2_2 = {1, 2};
+
+  // 拷贝赋值，v3 包含 1，2
+  vector<int> v3_1(v2_2);
+  vector<int> v3_2 = v2_2;
+
+  // 迭代器范围拷贝，v4 包含 1，2
+  vector<int> v4(v2_2.begin(), v2_2.end());
+
+  // v5 长度为 6，并对这些值进行了初始化
+  vector<int> v5(6);
+
+  // v6 长度为 6，并对这些值进行了初始为了 6
+  vector<int> v6(6, 6);
+}
+
+/**
+ * 练习9.12：对于接受一个容器创建其拷贝的构造函数，和接受两个迭代器创建拷贝的构造函数，解释它们的不同。
+ */
+void p9_12 () {
+  // 容器创建其拷贝：要求容器类型和元素类型都必须相同
+
+  // 迭代器：容器类型不要求相同，元素类型也可以不同，会进行隐式转换
+}
+
+/**
+ * 练习9.13：如何从一个list<int>初始化一个vector<double>？从一个vector<int>又该如何创建？编写代码验证你的答案。
+ */
+void p9_13 () {
+  std::list<int> listInt = {1,2,3};
+  vector<double> vecDouble(listInt.begin(), listInt.end());
+
+
+  std::list<int> listInt2(vecDouble.begin(), vecDouble.end());
+}
+
 int main (int argc, char **argv) {
   p9_02();
   // p9_03();
@@ -125,6 +170,9 @@ int main (int argc, char **argv) {
   // p9_08();
   // p9_09();
   // p9_10();
+  p9_11();
+  p9_12();
+  p9_13();
 
   return 0;
 }
