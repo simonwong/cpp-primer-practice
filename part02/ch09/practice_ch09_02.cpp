@@ -160,6 +160,76 @@ void p9_13 () {
   std::list<int> listInt2(vecDouble.begin(), vecDouble.end());
 }
 
+/**
+ * 练习9.14：编写程序，将一个list中的char *指针（指向C风格字符串）元素赋值给一个vector中的string。
+ */
+void p9_14 () {
+  std::list<const char*> charList = {"Some", "Any", "Nothing"};
+  vector<string> v;
+
+  v.assign(charList.begin(), charList.end());
+
+  for (auto str : v) {
+    cout << str << endl;
+  }
+}
+
+/**
+ * 练习9.15：编写程序，判定两个vector<int>是否相等。
+ */
+bool p9_15 () {
+  vector<int> v1 = {1,2,3,4,5,6,7,8};
+  vector<int> v2 = {1,2,3,4,5,6,7,8};
+
+  cout << "v1 == v2 is" << (v1 == v2 ? "true" : "false") << endl;
+
+  // auto begin1 = v1.begin();
+  // auto end1 = v1.end();
+  // auto begin2 = v2.begin();
+  // auto end2 = v2.end();
+
+  // while (begin1 != end1 || begin2 != end2) {
+  //   if (begin1 != begin2) {
+  //     return false;
+  //   }
+  //   begin1++;
+  //   begin2++;
+  // }
+  // return true;
+}
+
+/**
+ * 练习9.16：重写上一题的程序，比较一个list<int>中的元素和一个vector<int>中的元素。
+ */
+bool p9_16 () {
+  vector<int> v1 = {1,2,3,4,5,6,7,8};
+  std::list<int> l2 = {1,2,3,4,5,6,7,8};
+
+  cout << "v1 == l2 is" << (v1 == vector<int>{l2.begin(), l2.end()} ? "true" : "false") << endl;
+
+  // auto begin1 = v1.begin();
+  // auto end1 = v1.end();
+  // auto begin2 = l2.begin();
+  // auto end2 = l2.end();
+
+  // while (begin1 != end1 || begin2 != end2) {
+  //   if (*begin1 != *begin2) {
+  //     return false;
+  //   }
+  //   begin1++;
+  //   begin2++;
+  // }
+  // return true;
+}
+
+/**
+ * 练习9.17：假定c1和c2是两个容器，下面的比较操作有何限制（如果有的话）？
+ */
+bool p9_17 () {
+  // 容器类型、元素类型都要想等
+  // 都不是非顺序容器
+}
+
 int main (int argc, char **argv) {
   p9_02();
   // p9_03();
@@ -173,6 +243,10 @@ int main (int argc, char **argv) {
   p9_11();
   p9_12();
   p9_13();
+  p9_14();
+  p9_15();
+  p9_16();
+  p9_17();
 
   return 0;
 }
