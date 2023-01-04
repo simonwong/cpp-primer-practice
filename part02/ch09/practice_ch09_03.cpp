@@ -126,14 +126,70 @@ void p9_24 () {
   cout << *(vi.begin()) << endl;
 }
 
+/**
+ * 练习9.25：对于第312页中删除一个范围内的元素的程序，如果elem1与elem2相等会发生什么？
+ * 如果elem2是尾后迭代器，或者elem1和elem2皆为尾后迭代器，又会发生什么？
+ */
+void p9_25 () {
+  // 相等就不会发生什么
+  // 如果是尾后迭代器，那么会删除 elem1 之后的所有元素
+  // 如果都是尾后，也不会发生什么
+}
+
+/**
+ * 练习9.26：使用下面代码定义的ia，将ia拷贝到一个vector和一个list中。使用单迭代器版本的erase从list中删除奇数元素，从vector中删除偶数元素。
+ */
+void p9_26 () {
+  int ia[] = {0,1,1,2,3,5,8,13,21,55,89};
+  vector<int> intVec(ia, std::end(ia));
+  std::list<int> intList(ia, std::end(ia));
+
+  auto vecBegin = intVec.begin();
+  auto vecEnd = intVec.end();
+
+  while (vecBegin != vecEnd) {
+    if (*vecBegin % 2 == 0) {
+      vecBegin = intVec.erase(vecBegin);
+    } else {
+      ++vecBegin;
+    }
+  }
+
+  cout << "vector:";
+  for (auto i : intVec) {
+    cout << i << ",";
+  }
+  cout << endl;
+
+  auto listBegin = intList.begin();
+  auto listEnd = intList.end();
+
+  while (listBegin != listEnd) {
+    if (*listBegin % 2 == 1) {
+      listBegin = intList.erase(listBegin);
+    } else {
+      ++listBegin;
+    }
+  }
+
+
+  cout << "list:";
+  for (auto i : intList) {
+    cout << i << ",";
+  }
+  cout << endl;
+}
+
 int main (int argc, char **argv) {
-  // p9_18();
-  // p9_19();
-  // p9_20();
-  // p9_21();
-  // p9_22();
-  // p9_23();
+  p9_18();
+  p9_19();
+  p9_20();
+  p9_21();
+  p9_22();
+  p9_23();
   p9_24();
+  p9_25();
+  p9_26();
 
   return 0;
 }
