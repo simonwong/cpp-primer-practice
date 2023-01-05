@@ -5,6 +5,7 @@
 #include <vector>
 #include <deque>
 #include <list>
+#include <forward_list>
 
 using std::cout;
 using std::cin;
@@ -180,6 +181,55 @@ void p9_26 () {
   cout << endl;
 }
 
+/**
+ * 练习9.27：编写程序，查找并删除forward_list<int>中的奇数元素。
+ */
+void p9_27 () {
+  std::forward_list<int> flst = {0,1,1,2,3,5,8,13,21,55,89};
+  auto prev = flst.before_begin();
+  auto curr = flst.begin();
+
+  while (curr != flst.end()) {
+    if (*curr % 2 == 1) {
+      curr = flst.erase_after(prev);
+    } else {
+      prev = curr;
+      curr++;
+    }
+  }
+}
+
+/**
+ * 练习9.28：编写函数，接受一个forward_list<string>和两个string共三个参数。
+ * 函数应在链表中查找第一个string，并将第二个string插入到紧接着第一个string之后的位置。
+ * 若第一个string未在链表中，则将第二个string插入到链表末尾。
+ */
+void findAndInsertInForwardList (std::forward_list<string> flst, string const &findStr, string const &insertStr) {
+  auto prev = flst.before_begin();
+  auto curr = flst.begin();
+
+  while (curr != flst.end()) {
+    if (*curr == findStr) {
+      flst.insert_after(curr, insertStr);
+      return;
+    } else {
+      prev = curr;
+      curr++;
+    }
+  }
+  flst.insert_after(prev, insertStr);
+}
+void p9_28 () {
+  std::forward_list<string> flst = {"asd", "zxc", "ghj", "vbn", "uio", "rty"};
+  findAndInsertInForwardList(flst, "zxc", "jkl");
+
+  cout << "forward_list<string> flst: ";
+  for (auto text : flst) {
+    cout << text << ", ";
+  }
+  cout << endl;
+}
+
 int main (int argc, char **argv) {
   p9_18();
   p9_19();
@@ -190,6 +240,8 @@ int main (int argc, char **argv) {
   p9_24();
   p9_25();
   p9_26();
+  p9_27();
+  p9_28();
 
   return 0;
 }
