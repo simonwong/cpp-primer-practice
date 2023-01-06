@@ -230,6 +230,22 @@ void p9_28 () {
   cout << endl;
 }
 
+/**
+ * 练习9.29：假定vec包含25个元素，那么vec.resize（100）会做什么？如果接下来调用vec.resize（10）会做什么？
+ */
+void p9_29 () {
+  vector<int> vec(25, 2);
+  vec.resize(100); // 补充 75 个 0
+  vec.resize(10); // 变成 10 个 2
+}
+
+/**
+ * 练习9.30：接受单个参数的resize版本对元素类型有什么限制（如果有的话）
+ */
+void p9_30 () {
+  // 当 size 是大于原来的大小，元素类型必须得支持默认初始化
+}
+
 int main (int argc, char **argv) {
   p9_18();
   p9_19();
@@ -242,6 +258,8 @@ int main (int argc, char **argv) {
   p9_26();
   p9_27();
   p9_28();
+  p9_29();
+  p9_30();
 
   return 0;
 }
