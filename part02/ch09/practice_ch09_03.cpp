@@ -246,6 +246,73 @@ void p9_30 () {
   // 当 size 是大于原来的大小，元素类型必须得支持默认初始化
 }
 
+/**
+ * 练习9.31：第316页中删除偶数值元素并复制奇数值元素的程序不能用于list或forward_list。为什么？修改程序，使之也能用于这些类型。
+ */
+void p9_31 () {
+  std::list<int> vi = {0,1,2,3,4,5,6,7,8,9};
+  auto iter = vi.begin();
+  while (iter != vi.end()) {
+    if (*iter % 2) {
+      iter = vi.insert(iter, *iter);
+      std::advance(iter, 2);
+    } else {
+      iter = vi.erase(iter);
+    }
+  }
+
+  for (auto i : vi) cout << i << " ";
+}
+
+/**
+ * 练习9.32：在第316页的程序中，向下面语句这样调用insert是否合法？如果不合法，为什么？
+ */
+void p9_32 () {
+  // iter = vi.insert(iter, *iter++);
+
+  // 不合法，*iter++ 求值的顺序不定
+}
+
+/**
+ * 练习9.33：在本节最后一个例子中，如果不将insert的结果赋予begin，将会发生什么？编写程序，去掉此赋值语句，验证你的答案。
+ */
+void p9_33 () {
+  // 报错，插入后迭代器将会失效
+  vector<int> vi = {1,2,3,4,5,6,7,8,9};
+  auto begin = vi.begin();
+
+  while (begin != vi.end()) {
+    ++begin;
+    vi.insert(begin, 42);
+    ++begin;
+  }
+
+  for (auto i : vi) cout << i << " ";
+}
+
+/**
+ * 练习9.34：假定vi是一个保存int的容器，其中有偶数值也有奇数值，分析下面循环的行为，然后编写程序验证你的分析是否正确。
+ */
+void p9_34 () {
+  vector<int> vi = {1,2,3,4,5,6,7,8,9};
+
+  // 预期：每次遇到奇数就会向后插入一个相同的值
+  // 实际：会无限循环
+  // 修改：insert 完需要跳过被插入的值，且每次都要++
+
+  auto iter = vi.begin();
+  while (iter != vi.end()) {
+    cout << *iter << " ";
+    if (*iter % 2) {
+      iter = vi.insert(iter, *iter);
+      ++iter;
+    }
+    ++iter;
+  }
+
+  for (auto i : vi) cout << i << " ";
+}
+
 int main (int argc, char **argv) {
   p9_18();
   p9_19();
@@ -260,6 +327,10 @@ int main (int argc, char **argv) {
   p9_28();
   p9_29();
   p9_30();
+  p9_31();
+  // p9_32();
+  p9_33();
+  p9_34();
 
   return 0;
 }
