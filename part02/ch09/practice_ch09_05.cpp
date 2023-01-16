@@ -109,6 +109,56 @@ void p9_46 () {
   cout << newStr << endl;
 }
 
+/**
+ * 练习9.47：编写程序，首先查找string "ab2c3d7R4E6"中的每个数字字符，然后查找其中每个字母字符。
+ * 编写两个版本的程序，第一个要使用find_first_of，第二个要使用find_first_not_of。
+ */
+void findAndPrintChartOrNumInStrBy_first_of (string const& s) {
+  for (int i = 0; (i = s.find_first_of("123456789", i)) != string::npos; i++) {
+    cout << s[i] << ",";
+  }
+  cout << endl;
+  for (int i = 0; (i = s.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", i)) != string::npos; i++) {
+    cout << s[i] << ",";
+  }
+  cout << endl;
+}
+void findAndPrintChartOrNumInStrBy_first_not_of (string const& s) {
+  for (int i = 0; (i = s.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", i)) != string::npos; i++) {
+    cout << s[i] << ",";
+  }
+  cout << endl;
+  for (int i = 0; (i = s.find_first_not_of("123456789", i)) != string::npos; i++) {
+    cout << s[i] << ",";
+  }
+  cout << endl;
+}
+
+void p9_47 () {
+  findAndPrintChartOrNumInStrBy_first_of("ab2c3d7R4E6");
+  findAndPrintChartOrNumInStrBy_first_not_of("ab2c3d7R4E6");
+}
+
+/**
+ * 练习9.48：假定name和numbers的定义如325页所示，numbers.find（name）返回什么？
+ */
+void p9_48 () {
+  string name("r2d2");
+  string numbers("0123456789");
+  cout << numbers.find(name) << endl;
+
+  // 返回 string::npos
+}
+
+/**
+ * 练习9.49：如果一个字母延伸到中线之上，如d或f，则称其有上出头部分（ascender）。
+ * 如果一个字母延伸到中线之下，如p或g，则称其有下出头部分（descender）。
+ * 编写程序，读入一个单词文件，输出最长的既不包含上出头部分，也不包含下出头部分的单词。
+ */
+void p9_49 () {
+  //。。。。
+}
+
 int main (int argc, char **argv) {
   p9_41();
   // p9_42();
@@ -116,6 +166,9 @@ int main (int argc, char **argv) {
   p9_44();
   p9_45();
   p9_46();
+  p9_47();
+  p9_48();
+  // p9_49();
 
   return 0;
 }
