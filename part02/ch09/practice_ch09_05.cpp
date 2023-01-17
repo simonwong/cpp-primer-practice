@@ -1,17 +1,13 @@
 #include <iostream>
-#include <sstream>
-#include <fstream>
 #include <string>
 #include <vector>
-#include <deque>
-#include <list>
-#include <forward_list>
 
 using std::cout;
 using std::cin;
 using std::string;
 using std::vector;
 using std::endl;
+using std::stoi;
 
 /**
  * 练习9.41：编写程序，从一个vector<char>初始化一个string。
@@ -159,6 +155,74 @@ void p9_49 () {
   //。。。。
 }
 
+/**
+ * 练习9.50：编写程序处理一个vector<string>，其元素都表示整型值。计算vector中所有元素之和。修改程序，使之计算表示浮点值的string之和。
+ */
+void p9_50 () {
+  vector<string> strNumVec = {"123", "456", "234", "678", "6745"};
+  int res = 0;
+
+  for (auto str : strNumVec) {
+    res += stoi(str);
+  }
+  cout << "number: " << res << endl;
+  cout << "string: " << std::to_string(res) << endl;
+}
+
+/**
+ * 练习9.51：设计一个类，它有三个unsigned成员，分别表示年、月和日。
+ * 为其编写构造函数，接受一个表示日期的string参数。
+ * 你的构造函数应该能处理不同数据格式，如January 1，1900、1/1/1990、Jan 1 1900等。
+ */
+class MyStringDate {
+private:
+  unsigned year, month, day;
+public:
+  MyStringDate(string const& dateStr) {
+    if (dateStr.find_first_of("/") != string::npos) {
+      day = stoi(dateStr.substr(0, dateStr.find_first_of("/")));
+      month = stoi(dateStr.substr(dateStr.find_first_of("/") + 1, dateStr.find_last_of("/") - dateStr.find_first_of("/")));
+      year = stoi(dateStr.substr(dateStr.find_last_of("/") + 1, 4));
+      return;
+    }
+    if (dateStr.find_first_of(" ") != string::npos) {
+      string monthEn = dateStr.substr(0, dateStr.find_first_of(" "));
+      if (monthEn.find("Jan") != string::npos) month = 1;
+      if (monthEn.find("Feb") != string::npos) month = 2;
+      if (monthEn.find("Mar") != string::npos) month = 3;
+      if (monthEn.find("Apr") != string::npos) month = 4;
+      if (monthEn.find("May") != string::npos) month = 5;
+      if (monthEn.find("Jun") != string::npos) month = 6;
+      if (monthEn.find("Jul") != string::npos) month = 7;
+      if (monthEn.find("Aug") != string::npos) month = 8;
+      if (monthEn.find("Sep") != string::npos) month = 9;
+      if (monthEn.find("Oct") != string::npos) month = 10;
+      if (monthEn.find("Nov") != string::npos) month = 11;
+      if (monthEn.find("Dec") != string::npos) month = 12;
+
+      string secondChar = " ";
+      if (dateStr.find_first_of(",") != string::npos) {
+        secondChar = ",";
+      }
+
+      day = stoi(dateStr.substr(dateStr.find_first_of(" ") + 1, dateStr.find_last_of(secondChar) - dateStr.find_first_of(" ")));
+      year = stoi(dateStr.substr(dateStr.find_last_of(secondChar) + 1, 4));
+    }
+  }
+
+  void print () {
+    cout << "year: " << year << ", month: " << month << ", day: " << day << endl;
+  }
+};
+void p9_51 () {
+  MyStringDate a("1/1/1990");
+  a.print();
+  MyStringDate b("January 1,1900");
+  b.print();
+  MyStringDate c("Jan 1 1900");
+  c.print();
+}
+
 int main (int argc, char **argv) {
   p9_41();
   // p9_42();
@@ -169,6 +233,8 @@ int main (int argc, char **argv) {
   p9_47();
   p9_48();
   // p9_49();
+  p9_50();
+  p9_51();
 
   return 0;
 }
