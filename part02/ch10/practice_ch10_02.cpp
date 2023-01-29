@@ -1,12 +1,16 @@
 #include <iostream>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <string>
 #include <numeric>
+#include <iterator>
 
 using std::cout;
+using std::cin;
 using std::endl;
 using std::vector;
+using std::list;
 using std::string;
 
 /**
@@ -41,10 +45,50 @@ void p10_5 () {
   // 将会进行地址对比，而不是字符串本身，跟 string 比可能会得到不同的结果。
 }
 
+/**
+ * 练习10.6：编写程序，使用fill_n将一个序列中的int值都设置为0。
+ */
+void p10_6 () {
+  vector<int> iv = {1,2,3,4,5,6,7,8,9};
+  std::fill_n(iv.begin(), iv.size(), 0);
+
+  for (auto i : iv) {
+    cout << i;
+  }
+  cout << endl;
+}
+
+/**
+ * 练习10.7：下面程序是否有错误？如果有，请改正。
+ */
+void p10_7 () {
+  // a
+  vector<int> vec; list<int> lst; int i;
+  while (cin >> i) {
+    lst.push_back(i);
+  }
+  std::copy(lst.cbegin(), lst.cend(), std::back_inserter(vec));
+
+  // b
+  vector<int> vec;
+  vec.reserve(10);
+  std::fill_n(std::back_inserter(vec), 10, 0);
+}
+
+/**
+ * 练习10.8：本节提到过，标准库算法不会改变它们所操作的容器的大小。为什么使用back_inserter不会使这一断言失效？
+ */
+void p10_8 () {
+  // back_inserter 是 迭代器的功能，而不是算法
+}
+
 int main () {
   p10_3();
   p10_4();
   p10_5();
+  p10_6();
+  p10_7();
+  p10_8();
 
   return 0;
 }
