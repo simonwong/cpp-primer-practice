@@ -70,9 +70,9 @@ void p10_7 () {
   std::copy(lst.cbegin(), lst.cend(), std::back_inserter(vec));
 
   // b
-  vector<int> vec;
-  vec.reserve(10);
-  std::fill_n(std::back_inserter(vec), 10, 0);
+  vector<int> vec2;
+  vec2.reserve(10);
+  std::fill_n(std::back_inserter(vec2), 10, 0);
 }
 
 /**
@@ -82,6 +82,53 @@ void p10_8 () {
   // back_inserter 是 迭代器的功能，而不是算法
 }
 
+/**
+ * 练习10.9：实现你自己的elimDups。测试你的程序，分别在读取输入后、调用unique后以及调用erase后打印vector的内容。
+ */
+void elimDups (vector<int>& vec) {
+  cout << "Origin: ";
+  for (auto i : vec) {
+    cout << i << ",";
+  }
+  cout << endl;
+
+  std::sort(vec.begin(), vec.end());
+
+  cout << "Sort: ";
+  for (auto i : vec) {
+    cout << i << ",";
+  }
+  cout << endl;
+
+  auto end_unique = std::unique(vec.begin(), vec.end());
+
+  cout << "Unique: ";
+  for (auto i : vec) {
+    cout << i << ",";
+  }
+  cout << endl;
+
+  vec.erase(end_unique, vec.end());
+  cout << "Erase: ";
+  for (auto i : vec) {
+    cout << i << ",";
+  }
+  cout << endl;
+}
+void p10_9 () {
+  vector<int> vec = {1,2,4,1,2,5,3,2,1};
+  elimDups(vec);
+}
+
+/**
+ * 练习10.10：你认为算法不改变容器大小的原因是什么？
+ */
+void p10_10 () {
+  // 库算法是操作迭代器，而不操作容器，不能修改大小
+
+  // 算法和操作分离
+}
+
 int main () {
   p10_3();
   p10_4();
@@ -89,6 +136,8 @@ int main () {
   p10_6();
   p10_7();
   p10_8();
+  p10_9();
+  p10_10();
 
   return 0;
 }
