@@ -109,10 +109,65 @@ void p10_13 () {
   cout << endl;
 }
 
+/**
+ * 练习10.14：编写一个lambda，接受两个int，返回它们的和。
+ */
+void p10_14 () {
+  auto add = [](int a, int b) {
+    return a + b;
+  };
+  cout << add(5, 3) << endl;
+}
+
+/**
+ * 练习10.15：编写一个lambda，捕获它所在函数的int，并接受一个int参数。lambda应该返回捕获的int和int参数的和。
+ */
+void p10_15 () {
+  int it = 12;
+  auto add = [it](int a) {
+    return a + it;
+  };
+  cout << add(10) << endl;
+}
+
+/**
+ * 练习10.16：使用lambda编写你自己版本的biggies。
+ */
+string make_plural(long iter, const string &str, const string &suffix) {
+  return "sad";
+}
+void biggies (vector<string> &words, vector<string>::size_type sz) {
+  elimDups(words);
+
+  std::stable_sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    return a.size() < b.size();
+  });
+  auto wc = std::find_if(words.begin(), words.end(), [sz](const string &a) {
+    return a.size() >= sz;
+  });
+
+  auto count = words.end() - wc;
+
+  cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer " << endl;
+
+  std::for_each(wc, words.end(), [](const string &s) {
+    cout << s << " ";
+  });
+  cout << endl;
+}
+void p10_16 () {
+  vector<string> words = {"asd", "zxcv", "dfgreq", "a", "a", "sfsd", "fg", "dfgreq", "w44wa"};
+
+  biggies(words, 3);
+}
+
 int main () {
   p10_11();
   p10_12();
   p10_13();
+  p10_14();
+  p10_15();
+  p10_16();
 
   return 0;
 }
