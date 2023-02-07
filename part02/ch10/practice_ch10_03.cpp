@@ -161,6 +161,73 @@ void p10_16 () {
   biggies(words, 3);
 }
 
+/**
+ * 练习10.17：重写10.3.1节练习10.12（第345页）的程序，在对sort的调用中使用lambda来代替函数compareIsbn。
+ */
+void compareIsbnUseLambda (vector<Sales_data>& vec) {
+  std::stable_sort(vec.begin(), vec.end(), [](const Sales_data& s1, const Sales_data& s2) {
+    return s1.isbn() < s2.isbn();
+  });
+}
+void p10_17 () {
+}
+
+/**
+ * 练习10.18：重写biggies，用partition代替find_if。我们在10.3.1节练习10.13（第345页）中介绍了partition算法。
+ */
+void biggiesByPartition (vector<string> &words, vector<string>::size_type sz) {
+  elimDups(words);
+
+  std::stable_sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    return a.size() < b.size();
+  });
+  auto wc = std::partition(words.begin(), words.end(), [sz](const string &a) {
+    return a.size() < sz;
+  });
+
+  auto count = words.end() - wc;
+
+  cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer " << endl;
+
+  std::for_each(wc, words.end(), [](const string &s) {
+    cout << s << " ";
+  });
+  cout << endl;
+}
+void p10_18 () {
+  vector<string> words = {"asd", "zxcv", "dfgreq", "a", "a", "sfsd", "fg", "dfgreq", "w44wa"};
+
+  biggiesByPartition(words, 3);
+}
+
+/**
+ * 练习10.19：用stable_partition重写前一题的程序，与stable_sort类似，在划分后的序列中维持原有元素的顺序。
+ */
+void biggiesByStablePartition (vector<string> &words, vector<string>::size_type sz) {
+  elimDups(words);
+
+  std::stable_sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    return a.size() < b.size();
+  });
+  auto wc = std::stable_partition(words.begin(), words.end(), [sz](const string &a) {
+    return a.size() < sz;
+  });
+
+  auto count = words.end() - wc;
+
+  cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer " << endl;
+
+  std::for_each(wc, words.end(), [](const string &s) {
+    cout << s << " ";
+  });
+  cout << endl;
+}
+void p10_19 () {
+  vector<string> words = {"asd", "zxcv", "dfgreq", "a", "a", "sfsd", "fg", "dfgreq", "w44wa"};
+
+  biggiesByStablePartition(words, 3);
+}
+
 int main () {
   p10_11();
   p10_12();
@@ -168,6 +235,9 @@ int main () {
   p10_14();
   p10_15();
   p10_16();
+  p10_17();
+  p10_18();
+  p10_19();
 
   return 0;
 }
