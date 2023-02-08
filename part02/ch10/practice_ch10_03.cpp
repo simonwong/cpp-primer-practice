@@ -228,6 +228,41 @@ void p10_19 () {
   biggiesByStablePartition(words, 3);
 }
 
+/**
+ * 练习10.20：标准库定义了一个名为count_if的算法。
+ * 类似find_if，此函数接受一对迭代器，表示一个输入范围，还接受一个谓词，会对输入范围中每个元素执行。
+ * count_if返回一个计数值，表示谓词有多少次为真。
+ * 使用count_if重写我们程序中统计有多少单词长度超过6的部分。
+ */
+void p10_20 () {
+  vector<string> words = {"asd", "zxcv", "dfgreq", "a", "a", "sfsd", "fg", "dfgreq", "w44wa"};
+
+  auto sum = std::count_if(words.begin(), words.end(), [](const string &w) { return w.size() > 3; });
+
+  cout << "Number of words longer than 3 is: " << sum << endl;
+}
+
+/**
+ * 练习10.21：编写一个lambda，捕获一个局部int变量，并递减变量值，直至它变为0。
+ * 一旦变量变为0，再调用lambda应该不再递减变量。
+ * lambda应该返回一个bool值，指出捕获的变量是否为0。
+ */
+void p10_21 () {
+  int num = 10;
+
+  auto f = [&num]() mutable -> bool {
+    if (num == 0) {
+      return true;
+    }
+    --num;
+    return false;
+  };
+
+  while (!f()) {
+  }
+  cout << "current num: " << num << endl;
+}
+
 int main () {
   p10_11();
   p10_12();
@@ -238,6 +273,8 @@ int main () {
   p10_17();
   p10_18();
   p10_19();
+  p10_20();
+  p10_21();
 
   return 0;
 }
