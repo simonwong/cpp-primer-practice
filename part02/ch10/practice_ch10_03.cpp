@@ -263,6 +263,67 @@ void p10_21 () {
   cout << "current num: " << num << endl;
 }
 
+/**
+ * 练习10.22：重写统计长度小于等于6的单词数量的程序，使用函数代替lambda。
+ */
+bool isShorterThan6 (const string &w) {
+  return w.size() <= 6;
+}
+void p10_22 () {
+  vector<string> words = {"asdasdas", "zxcv", "dfgreq", "asd", "a", "sfsdsdfdsf", "fg", "dfgreq", "w44wa"};
+
+  auto sum = std::count_if(words.begin(), words.end(), isShorterThan6);
+
+  cout << "Number of words shorter than 6 is: " << sum << endl;
+}
+
+/**
+ * 练习10.23：bind接受几个参数？
+ */
+void p10_23 () {
+  // 取决于被 bind 的函数形参个数 + 1
+}
+
+/**
+ * 练习10.24：给定一个string，使用bind和check_size在一个int的vector中查找第一个大于string长度的值。
+ */
+bool check_size(const std::string &s, std::string::size_type sz) {
+  return s.size() >= sz;
+}
+void p10_24 () {
+  vector<int> vi = {3,4,5,2,5,6,3};
+  string str = "asdf";
+  auto result = std::find_if(vi.begin(), vi.end(), std::bind(check_size, str, std::placeholders::_1));
+  cout << *result << endl;
+}
+
+/**
+ * 练习10.25：在10.3.2节（第349页）的练习中，编写了一个使用partition的biggies版本。
+ * 使用check_size和bind重写此函数。
+ */
+void biggiesByPartitionWidthBind (vector<string> &words, vector<string>::size_type sz) {
+  elimDups(words);
+
+  std::stable_sort(words.begin(), words.end(), [](const string &a, const string &b) {
+    return a.size() < b.size();
+  });
+  auto wc = std::partition(words.begin(), words.end(), std::bind(check_size, std::placeholders::_1, sz));
+
+  auto count = words.end() - wc;
+
+  cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer " << endl;
+
+  std::for_each(wc, words.end(), [](const string &s) {
+    cout << s << " ";
+  });
+  cout << endl;
+}
+void p10_25 () {
+  vector<string> words = {"asd", "zxcv", "dfgreq", "a", "a", "sfsd", "fg", "dfgreq", "w44wa"};
+
+  biggiesByPartitionWidthBind(words, 3);
+}
+
 int main () {
   p10_11();
   p10_12();
@@ -275,6 +336,10 @@ int main () {
   p10_19();
   p10_20();
   p10_21();
+  p10_22();
+  // p10_23();
+  p10_24();
+  p10_25();
 
   return 0;
 }
