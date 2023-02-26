@@ -137,7 +137,7 @@ void p11_13 () {
  * 添加一个pair的vector，保存孩子的名和生日。
  */
 void p11_14 () {
- std::map<string, vector<std::pair<string, string>>> familyMap = {
+  std::map<string, vector<std::pair<string, string>>> familyMap = {
     {"Xiao", {{"ming", "1001-01-02"}, {"hong", "1002-04-03"}, {"dai", "1001-22-03"}}},
     {"Lao", {{"b", "0009-12-12"}, {"a", "1003-01-01"}}},
   };
