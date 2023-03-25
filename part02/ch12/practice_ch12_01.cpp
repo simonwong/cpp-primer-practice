@@ -90,6 +90,78 @@ void p12_5 () {
   // explicit 防止 initializer_list 自动转换为 StrBlob
 }
 
+/**
+ * 练习12.6：编写函数，返回一个动态分配的int的vector。
+ * 将此vector传递给另一个函数，这个函数读取标准输入，将读入的值保存在vector元素中。
+ * 再将vector传递给另一个函数，打印读入的值。记得在恰当的时刻delete vector。
+ */
+vector<int>* generate_vi () {
+  auto *vi = new vector<int>({ 1, 2, 3 });
+
+  return vi;
+}
+vector<int> cin_vi (vector<int> *vi) {
+  vector<int> temp(vi->cbegin(), vi->cend());
+
+  return temp;
+}
+auto print_vi (vector<int> *vi) -> std::ostream& {
+  for (auto i : *vi) {
+    cout << i << ", ";
+  }
+  cout << endl;
+  return cout;
+}
+void p12_6 () {
+  vector<int> *vi = generate_vi();
+  vector<int> temp = cin_vi(vi);
+  print_vi(vi);
+  delete vi;
+}
+
+/**
+ * 练习12.7：重做上一题，这次使用shared_ptr而不是内置指针。
+ */
+using Shared_vec_int = std::shared_ptr<vector<int>>;
+
+auto generate_vi_by_shared () {
+  return std::make_shared<vector<int>>();
+}
+auto cin_vi_by_shared (Shared_vec_int vi) {
+  vector<int> temp(vi->cbegin(), vi->cend());
+
+  return temp;
+}
+auto print_vi_by_shared (Shared_vec_int vi) -> std::ostream& {
+  for (auto i : *vi) {
+    cout << i << ", ";
+  }
+  cout << endl;
+  return cout;
+}
+void p12_7 () {
+  Shared_vec_int vi = generate_vi_by_shared();
+  auto temp = cin_vi_by_shared(vi);
+  print_vi_by_shared(vi);
+}
+
+/**
+ * 练习12.8：下面的函数是否有错误？如果有，解释错误原因。
+ */
+void p12_8 () {
+  // p 会被转正 bool 类型，导致内存没有被释放
+}
+
+/**
+ * 练习12.9：解释下面代码执行的结果
+ */
+void p12_9 () {
+  int *q = new int(32), *r = new int(100);
+  r = q; // r 指针指向 q，原来的 r 内存没有被释放
+  auto q2 = std::make_shared<int>(42), r2 = std::make_shared<int>(100);
+  r2 = q2; // r2 指针指向 q2，原来的 r2 内存自动释放
+}
+
 
 int main () {
   // p12_1();
@@ -97,6 +169,10 @@ int main () {
   // p12_3();
   // p12_4();
   // p12_5();
+  p12_6();
+  p12_7();
+  // p12_8();
+  // p12_9();
 
   return 0;
 }
