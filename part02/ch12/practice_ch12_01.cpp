@@ -162,6 +162,127 @@ void p12_9 () {
   r2 = q2; // r2 指针指向 q2，原来的 r2 内存自动释放
 }
 
+/**
+ * 练习12.10：下面的代码调用了第413页中定义的process函数，解释此调用是否正确。如果不正确，应如何修改？
+ */
+void process(std::shared_ptr<int> ptr) {
+  cout << "inside the process function:" << ptr.use_count() << "\n";
+}
+void p12_10 () {
+  std::shared_ptr<int> p(new int(32));
+  process(std::shared_ptr<int>(p));
+
+  cout << p.use_count() << endl;
+  auto q = p;
+  cout << p.use_count() << endl;
+  cout << *p << endl;
+}
+
+/**
+ * 练习12.11：如果我们像下面这样调用process，会发生什么？
+ */
+void p12_11 () {
+  std::shared_ptr<int> p(new int(32));
+  process(std::shared_ptr<int>(p.get()));
+}
+
+/**
+ * 练习12.12：p和q的定义如下，对于接下来的对process的每个调用，如果合法，解释它做了什么，如果不合法，解释错误原因
+ */
+void p12_12 () {
+  auto p = new int();
+  auto sp = std::make_shared<int>();
+
+  // a
+  process(sp);
+  // b
+  // process(new int()); // ❌ 不合法，process 接收 shared_ptr 类型
+  // c
+  // process(p); // ❌ 不合法，process 接收 shared_ptr 类型
+  // d // 不是一个好的实践
+  process(std::shared_ptr<int>(p));
+}
+
+/**
+ * 练习12.13：如果执行下面的代码，会发生什么？
+ */
+void p12_13 () {
+  auto sp = std::make_shared<int>();
+  auto p = sp.get();
+  // delete p; 运行时错误
+}
+
+/**
+ * 练习12.14：编写你自己版本的用shared_ptr管理connection的函数。
+ */
+struct destination {};
+struct connection {};
+connection connect(destination*);
+void disconnect(connection);
+
+void end_connection(connection *p) {
+  disconnect(*p);
+}
+
+void p12_14 () {
+  destination d = destination();
+  connection c = connect(&d);
+  std::shared_ptr<connection> p(&c, end_connection);
+}
+/**
+ * 练习12.15：重写第一题的程序，用lambd（a参见10.3.2节，第346页）代替end_connection函数。
+ */
+void p12_15 () {
+  destination d = destination();
+  connection c = connect(&d);
+  std::shared_ptr<connection> p(&c, [](connection *p) {
+    disconnect(*p);
+  });
+}
+
+/**
+ * 练习12.16：如果你试图拷贝或赋值unique_ptr，编译器并不总是能给出易于理解的错误信息。
+ * 编写包含这种错误的程序，观察编译器如何诊断这种错误。
+ */
+void p12_16 () {
+  auto pi = std::unique_ptr<int>(new int(12));
+  // auto c = pi;
+  // auto c(pi);
+}
+
+/**
+ * 练习12.17：下面的unique_ptr声明中，哪些是合法的，哪些可能导致后续的程序错误？解释每个错误的问题在哪里。
+ */
+void p12_17 () {
+  int ix = 1024, *pi = &ix, *pi2 = new int(2048);
+  typedef std::unique_ptr<int> IntP;
+
+  // a
+  // IntP p0(ix); // ❌ ix 不是指针类型的
+
+  // b
+  IntP p1(pi); // ❌ 必须是 new 分配的
+
+  // c
+  IntP p2(pi2); // ❌
+
+  // d
+  IntP p3(&ix); // ❌ 同 b
+
+  // e
+  IntP p4(new int(2048)); // ✅
+
+  // f
+  IntP p5(p2.get()); // ❌
+}
+
+/**
+ * 练习12.18：shared_ptr为什么没有release成员？
+ */
+void p12_18 () {
+  // 因为其他指向对象的  shared_ptr 也可以删除
+}
+
 
 int main () {
   // p12_1();
@@ -173,6 +294,15 @@ int main () {
   p12_7();
   // p12_8();
   // p12_9();
+  p12_10();
+  p12_11();
+  p12_12();
+  p12_13();
+  // p12_14();
+  // p12_15();
+  p12_16();
+  // p12_17();
+  // p12_18();
 
   return 0;
 }
