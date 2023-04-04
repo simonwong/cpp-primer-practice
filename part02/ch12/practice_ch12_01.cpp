@@ -24,6 +24,7 @@ void p12_1 () {
  */
 class StrBlob {
   friend class StrBlobPtr;
+  friend class ConstStrBlobPtr;
 public:
   typedef vector<string> blob_list;
   typedef blob_list::size_type size_type;
@@ -56,14 +57,8 @@ public:
     return data->back();
   }
 
-  StrBlobPtr begin() {
-    return StrBlobPtr(*this);
-  }
-
-  StrBlobPtr end() {
-    auto ret = StrBlobPtr(*this, data->size());
-    return ret;
-  }
+  StrBlobPtr begin();
+  StrBlobPtr end();
 
 private:
   std::shared_ptr<blob_list> data;
@@ -300,7 +295,7 @@ class StrBlobPtr {
 public:
   StrBlobPtr(): curr(0) {}
   StrBlobPtr(StrBlob &a, std::size_t sz = 0): wptr(a.data), curr(0) {}
-
+  bool operator!=(StrBlobPtr& p) { return p.curr != curr; }
   string& deref() const {
     auto p = check(curr, "dereference past end");
     return (*p)[curr];
@@ -326,6 +321,15 @@ private:
   std::size_t curr;
 };
 
+StrBlobPtr StrBlob::begin() {
+  return StrBlobPtr(*this);
+}
+
+StrBlobPtr StrBlob::end() {
+  auto ret = StrBlobPtr(*this, data->size());
+  return ret;
+}
+
 void p12_19 () {
 }
 
@@ -333,13 +337,59 @@ void p12_19 () {
  * 练习12.20：编写程序，逐行读入一个输入文件，将内容存入一个StrBlob中，用一个StrBlobPtr打印出StrBlob中的每个元素。
  */
 void p12_20 () {
-  // StrBlob strb({ "sad", "cvb" });
-  // StrBlobPtr beg(strb.begin()), end(strb.end());
+  StrBlob strb({ "sad", "cvb" });
+  StrBlobPtr beg(strb.begin()), end(strb.end());
 
-  // while (beg != end) {
-  //   cout << beg.deref() << endl;
-  //   beg = beg.incr();
+  while (beg != end) {
+    cout << beg.deref() << endl;
+    beg.incr();
+  }
+}
+
+/**
+ * 练习12.21：也可以这样编写StrBlobPtr的deref成员
+ */
+void p12_21 () {
+  // std::string& deref() const {
+  //   return (*check(curr, "dereference past end"))[curr];
   // }
+  //
+  // 这样写不容易看
+}
+
+/**
+ * 练习12.22：为了能让StrBlobPtr使用const StrBlob，你觉得应该如何修改？定义一个名为ConstStrBlobPtr的类，使其能够指向const StrBlob。
+ */
+class ConstStrBlobPtr {
+public:
+  ConstStrBlobPtr(): curr(0) {}
+  ConstStrBlobPtr(const StrBlob &a, std::size_t sz = 0): wptr(a.data), curr(0) {}
+  bool operator!=(ConstStrBlobPtr& p) { return p.curr != curr; }
+  string& deref() const {
+    auto p = check(curr, "dereference past end");
+    return (*p)[curr];
+  };
+  ConstStrBlobPtr& incr() {
+    check(curr, "increment past end of ConstStrBlobPtr");
+    ++curr;
+    return *this;
+  };
+
+private:
+  std::shared_ptr<vector<string>> check(std::size_t i, const string &msg) const {
+    auto ret = wptr.lock();
+    if (!ret) {
+      throw std::runtime_error("unbound ConstStrBlobPtr");
+    }
+    if (i >= ret->size()) {
+      throw std::out_of_range(msg);
+    }
+    return ret;
+  };
+  std::weak_ptr<vector<string>> wptr;
+  std::size_t curr;
+};
+void p12_22 () {
 }
 
 int main () {
@@ -363,6 +413,8 @@ int main () {
   // p12_18();
   // p12_19();
   p12_20();
+  // p12_21();
+  // p12_22();
 
   return 0;
 }
