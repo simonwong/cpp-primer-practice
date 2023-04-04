@@ -23,6 +23,7 @@ void p12_1 () {
  * 练习12.2：编写你自己的StrBlob类，包含const版本的front和back。
  */
 class StrBlob {
+  friend class StrBlobPtr;
 public:
   typedef vector<string> blob_list;
   typedef blob_list::size_type size_type;
@@ -53,6 +54,15 @@ public:
   const string& back() const {
     check(0, "back on empty StrBlob");
     return data->back();
+  }
+
+  StrBlobPtr begin() {
+    return StrBlobPtr(*this);
+  }
+
+  StrBlobPtr end() {
+    auto ret = StrBlobPtr(*this, data->size());
+    return ret;
   }
 
 private:
@@ -283,6 +293,54 @@ void p12_18 () {
   // 因为其他指向对象的  shared_ptr 也可以删除
 }
 
+/**
+ * 练习12.19：定义你自己版本的StrBlobPtr，更新StrBlob类，加入恰当的friend声明及begin和end成员。
+ */
+class StrBlobPtr {
+public:
+  StrBlobPtr(): curr(0) {}
+  StrBlobPtr(StrBlob &a, std::size_t sz = 0): wptr(a.data), curr(0) {}
+
+  string& deref() const {
+    auto p = check(curr, "dereference past end");
+    return (*p)[curr];
+  };
+  StrBlobPtr& incr() {
+    check(curr, "increment past end of StrBlobPtr");
+    ++curr;
+    return *this;
+  };
+
+private:
+  std::shared_ptr<vector<string>> check(std::size_t i, const string &msg) const {
+    auto ret = wptr.lock();
+    if (!ret) {
+      throw std::runtime_error("unbound StrBlobPtr");
+    }
+    if (i >= ret->size()) {
+      throw std::out_of_range(msg);
+    }
+    return ret;
+  };
+  std::weak_ptr<vector<string>> wptr;
+  std::size_t curr;
+};
+
+void p12_19 () {
+}
+
+/**
+ * 练习12.20：编写程序，逐行读入一个输入文件，将内容存入一个StrBlob中，用一个StrBlobPtr打印出StrBlob中的每个元素。
+ */
+void p12_20 () {
+  // StrBlob strb({ "sad", "cvb" });
+  // StrBlobPtr beg(strb.begin()), end(strb.end());
+
+  // while (beg != end) {
+  //   cout << beg.deref() << endl;
+  //   beg = beg.incr();
+  // }
+}
 
 int main () {
   // p12_1();
@@ -303,6 +361,8 @@ int main () {
   p12_16();
   // p12_17();
   // p12_18();
+  // p12_19();
+  p12_20();
 
   return 0;
 }
