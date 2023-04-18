@@ -16,17 +16,19 @@ using std::string;
  * 练习12.23：编写一个程序，连接两个字符串字面常量，将结果保存在一个动态分配的char数组中。
  * 重写这个程序，连接两个标准库string对象。
  */
-char* mergeChar (char a, char b) {
-  auto p = new char[2]{ a, b };
-
-  return p;
+void mergeChar (const char* a, const char* b) {
+  char* res = new char[strlen(a) + strlen(b) + 1];
+  strcpy(res, a);
+  strcat(res, b);
+  cout << res << endl;
+  delete [] res;
 }
-string* mergeString (string a, string b) {
-  auto p = new string[a.size() + b.size()]{ a, b };
-
-  return p;
+void mergeString (const string a, const string b) {
+  cout << a + b << endl;
 }
 void p12_23 () {
+  mergeChar("Hello ", "Word");
+  mergeString("Hello ", "Word");
 }
 
 /**
@@ -54,10 +56,30 @@ void p12_25 () {
   delete [] pa;
 }
 
+/**
+ * 练习12.26：用allocator重写第427页中的程序。
+ */
+void p12_26 () {
+  int n = 5;
+  std::allocator<string> alloc;
+  auto const p = alloc.allocate(n);
+  string s;
+  auto q = p;
+  while (q != p + n && cin >> s) {
+    alloc.construct(q++, s);
+  }
+  while (q != p) {
+    cout << *--q << " ";
+    alloc.destroy(q);
+  }
+  alloc.deallocate(p, n);
+}
+
 int main () {
   p12_23();
   p12_24();
   p12_25();
+  p12_26();
 
   return 0;
 }
