@@ -51,7 +51,7 @@ class HasPtr {
 public:
   HasPtr(const string& s = string()) : ps(new string(s)), i(0) {}
 
-  HasPtr(const HasPtr& hp) : ps(new string(*hp.ps)), i(hp.i) ;
+  HasPtr(const HasPtr& hp) : ps(new string(*hp.ps)), i(hp.i) {};
 private:
   string *ps;
   int i;
@@ -60,12 +60,48 @@ void p13_05 () {
 
 }
 
+/**
+ * 练习13.6：拷贝赋值运算符是什么？什么时候使用它？
+ * 合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？
+ */
+void p13_06 () {
+  // 拷贝赋值运算符是用来控制对象如何赋值的，使用 operation= 运算符，当进行赋值时就会使用
+  // 合成拷贝赋值运算符会将右侧的每个非 static 成员赋予左侧对象的对应成员。
+  //
+}
+
+/**
+ * 练习13.7：当我们将一个StrBlob赋值给另一个StrBlob时，会发生什么？赋值StrBlobPtr呢？
+ */
+void p13_07 () {
+  // 会发生浅层复制
+}
+
+/**
+ * 练习13.8：为13.1.1节（第443页）练习13.5中的HasPtr类编写赋值运算符。
+ * 类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。
+ */
+class HasPtr2 {
+public:
+  HasPtr2(const string& s = string()) : ps(new string(s)), i(0) {}
+
+  HasPtr2& operator=(const HasPtr2&);
+private:
+  string *ps;
+  int i;
+};
+void p13_08 () {
+}
+
 int main () {
   // p13_01();
   // p13_02();
   // p13_03();
   // p13_04();
   // p13_05();
+  // p13_06();
+  // p13_07();
+  // p13_08();
 
   return 0;
 }
