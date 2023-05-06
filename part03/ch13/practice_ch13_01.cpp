@@ -178,6 +178,74 @@ void p13_13 () {
   delete px;
 }
 
+/**
+ * 练习13.14：假定numbered是一个类，它有一个默认构造函数，能为每个对象生成一个唯一的序号，保存在名为mysn的数据成员中。
+ * 假定numbered使用合成的拷贝控制成员，并给定如下函数
+ * void f (numbered s) { cout << s.mysn << endl };
+ * 则下面代码输出什么内容？
+ * numbered a, b = a, c = b;
+ * f(a); f(b); f(c);
+ */
+class numbered_14 {
+public:
+  numbered_14 () {
+    mysn = unique++;
+  }
+  int mysn;
+  static int unique;
+};
+int numbered_14::unique = 1;
+
+void f_14 (numbered_14 s) { cout << s.mysn << endl; };
+
+void p13_14 () {
+  // 输出相同的 mysn，都是 1
+  numbered_14 a, b = a, c = b;
+  f_14(a); f_14(b); f_14(c);
+}
+
+/**
+ * 练习13.15：假定numbered定义了一个拷贝构造函数，能生成一个新的序号。
+ * 这会改变上一题中调用的输出结果吗？如果会改变，为什么？新的输出结果是什么？
+ */
+class numbered_15 {
+public:
+  numbered_15 () {
+    mysn = unique++;
+  }
+  numbered_15 (const numbered_15&) {
+    mysn = unique++;
+  }
+  int mysn;
+  static int unique;
+};
+
+int numbered_15::unique = 10;
+
+void f_15 (numbered_15 s) { cout << s.mysn << endl; };
+void p13_15 () {
+  // f_15 发生了复制操作将会输出三个不同的序号，原始是 10，11，12，输出了 13，14，15
+  numbered_15 a, b = a, c = b;
+  f_15(a); f_15(b); f_15(c);
+}
+
+/**
+ * 练习13.16：如果f中的参数是const numbered&，将会怎样？
+ * 这会改变输出结果吗？如果会改变，为什么？新的输出结果是什么？
+ */
+void f_16 (const numbered_15 &s) { cout << s.mysn << endl; };
+void p13_16 () {
+  // f_16 中没有发生复制操作，输出 16，17，18
+  numbered_15 a, b = a, c = b;
+  f_16(a); f_16(b); f_16(c);
+}
+
+/**
+ * 练习13.17：分别编写前三题中所描述的numbered和f，验证你是否正确预测了输出结果。
+ */
+void p13_17 () {
+}
+
 int main () {
   // p13_01();
   // p13_02();
@@ -192,6 +260,10 @@ int main () {
   // p13_11();
   // p13_12();
   p13_13();
+  p13_14();
+  p13_15();
+  p13_16();
+  // p13_17();
 
   return 0;
 }
