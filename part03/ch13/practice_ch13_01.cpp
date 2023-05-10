@@ -246,6 +246,50 @@ void p13_16 () {
 void p13_17 () {
 }
 
+/**
+ * 练习13.18：定义一个Employee类，它包含雇员的姓名和唯一的雇员证号。
+ * 为这个类定义默认构造函数，以及接受一个表示雇员姓名的string的构造函数。
+ * 每个构造函数应该通过递增一个static数据成员来生成一个唯一的证号。
+ */
+class Employee {
+  Employee () : code(++inCode) {};
+  Employee (const string &n) : name(n), code(++inCode) {};
+  Employee (const Employee& emp) : name(emp.name), code(++inCode) {};
+
+  static int inCode;
+private:
+  string name;
+  int code;
+};
+
+int Employee::inCode = 0;
+
+void p13_18 () {
+}
+
+/**
+ * 练习13.19：你的Employee类需要定义它自己的拷贝控制成员吗？
+ * 如果需要，为什么？如果不需要，为什么？实现你认为Employee需要的拷贝控制成员。
+ */
+void p13_19 () {
+  // 需要的，因为 inCode 是递增的
+}
+
+/**
+ * 练习13.20：解释当我们拷贝、赋值或销毁TextQuery和QueryResult类（参见12.3节，第430页）对象时会发生什么。
+ */
+void p13_20 () {
+  // 他们的成员都会正常拷贝
+}
+
+/**
+ * 练习13.21：你认为TextQuery和QueryResult类需要定义它们自己版本的拷贝控制成员吗？
+ * 如果需要，为什么？如果不需要，为什么？实现你认为这两个类需要的拷贝控制操作。
+ */
+void p13_21 () {
+  // 不需要，合成的可以满足需求
+}
+
 int main () {
   // p13_01();
   // p13_02();
@@ -264,6 +308,10 @@ int main () {
   p13_15();
   p13_16();
   // p13_17();
+  // p13_18();
+  // p13_19();
+  // p13_20();
+  // p13_21();
 
   return 0;
 }
