@@ -74,12 +74,100 @@ void p13_26 () {
   // };
 }
 
+/**
+ * 练习13.27：定义你自己的使用引用计数版本的HasPtr。
+ */
+class HasPtr {
+public:
+  HasPtr(const string &s = string()) : ps(new string(s)), i(0), use(new size_t(1)) {}
+  HasPtr(const HasPtr &hp) : ps(hp.ps), i(hp.i), use(hp.use) { ++*use; }
+  HasPtr& operator=(const HasPtr &hp) {
+    ++*hp.use;
+    if (--*use == 0) {
+      delete ps;
+      delete use;
+    }
+    ps = hp.ps;
+    i = hp.i;
+    use = hp.use;
+    return *this;
+  }
+  ~HasPtr() {
+    if (--*use == 0) {
+      delete ps;
+      delete use;
+    }
+  }
+private:
+  string *ps;
+  int i;
+  size_t *use;
+};
+void p13_27 () {
+}
+
+/**
+ * 练习13.28：给定下面的类，为其实现一个默认构造函数和必要的拷贝控制成员。
+ */
+class TreeNode {
+public:
+  TreeNode() : value(string()), count(new int(1)), left(nullptr), right(nullptr) {}
+  TreeNode(const TreeNode &tn) : value(tn.value), count(tn.count), left(tn.left), right(tn.right) { ++*count; }
+  TreeNode& operator=(const TreeNode &tn) {
+    ++*tn.count;
+    if (--*count == 0) {
+      delete count;
+      delete left;
+      delete right;
+    }
+    value = tn.value;
+    count = tn.count;
+    left = tn.left;
+    right = tn.right;
+    return *this;
+  }
+  ~TreeNode() {
+    if (--*count == 0) {
+      delete count;
+      delete left;
+      delete right;
+    }
+  }
+private:
+  string value;
+  int *count;
+  TreeNode *left;
+  TreeNode *right;
+};
+
+class BinStrTree {
+public:
+  BinStrTree() : root(new TreeNode()) {}
+  BinStrTree(const BinStrTree &bst) : root(new TreeNode(*bst.root)) {}
+  BinStrTree& operator=(const BinStrTree &bst) {
+    TreeNode *new_root = new TreeNode(*bst.root);
+    delete root;
+    root = new_root;
+    return *this;
+  }
+  ~BinStrTree() {
+    delete root;
+  }
+private:
+  TreeNode *root;
+};
+
+void p13_28 () {
+}
+
 int main () {
   // p13_22();
   // p13_23();
   // p13_24();
   // p13_25();
   // p13_26();
+  // p13_27();
+  // p13_28();
 
   return 0;
 }
