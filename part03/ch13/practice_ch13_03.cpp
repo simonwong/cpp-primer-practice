@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 
 using std::cout;
 using std::cin;
@@ -86,11 +87,95 @@ void p13_32 () {
   // 避免内存分配才能提高性能，类指针版本没有受益
 }
 
+/**
+ * 练习13.33：为什么Message的成员save和remove的参数是一个Folder&？为什么我们不将参数定义为Folder或是const Folder&？
+ */
+void p13_33 () {
+  // 因为 folder 是可变的，所以要指向指针
+}
+
+/**
+ * 练习13.34：编写本节所描述的Message。
+ */
+class Message {
+  friend Folder;
+  friend void swap(Message &lhs, Message &rhs);
+public:
+  explicit Message(const string &str = "") : contents(str) {};
+  Message(const Message &m) : contents(m.contents), folders(m.folders) {
+    add_to_Folders(m);
+  };
+  Message& operator=(const Message &rhs) {
+    remove_from_Folders();
+    contents = rhs.contents;
+    folders = rhs.folders;
+    add_to_Folders(rhs);
+    return *this;
+  };
+  ~Message() {
+    remove_from_Folders();
+  };
+  void save(Folder &f) {
+    folders.insert(&f);
+    f.addMsg(this);
+  };
+  void remove(Folder &f) {
+    folders.erase(&f);
+    f.removeMsg(this);
+  };
+private:
+  string contents;
+  std::set<Folder*> folders;
+
+  void add_to_Folders(const Message &m) {
+    for (auto f : m.folders) {
+      f->addMsg(this);
+    }
+  };
+  void remove_from_Folders() {
+    for (auto f : folders) {
+      f->removeMsg(this);
+    }
+  };
+};
+
+void swap(Message &lhs, Message &rhs) {
+  using std::swap;
+
+  for (auto f : lhs.folders) {
+    f->removeMsg(&lhs);
+  }
+  for (auto f : rhs.folders) {
+    f->removeMsg(&rhs);
+  }
+
+  swap(lhs.folders, rhs.folders);
+  swap(lhs.contents, rhs.contents);
+
+  for (auto f : lhs.folders) {
+    f->addMsg(&lhs);
+  }
+  for (auto f : rhs.folders) {
+    f->addMsg(&rhs);
+  }
+}
+
+class Folder {
+public:
+  void addMsg (Message*);
+  void removeMsg (Message*);
+};
+
+void p13_34 () {
+}
+
 int main () {
   // p13_29();
   p13_30();
   p13_31();
   // p13_32();
+  // p13_33();
+  // p13_34();
 
   return 0;
 }
