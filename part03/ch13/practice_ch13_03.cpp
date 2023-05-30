@@ -160,13 +160,45 @@ void swap(Message &lhs, Message &rhs) {
   }
 }
 
-class Folder {
-public:
-  void addMsg (Message*);
-  void removeMsg (Message*);
-};
 
 void p13_34 () {
+}
+
+/**
+ * 练习13.35：如果Message使用合成的拷贝控制成员，将会发生什么？
+ */
+void p13_35 () {
+  // Folder 就不会有 message 信息
+}
+
+/**
+ * 练习13.36：设计并实现对应的Folder类。此类应该保存一个指向Folder中包含的Message的set。
+ */
+class Folder {
+public:
+  void addMsg (Message *msg) {
+    messageSet.insert(msg);
+  };
+  void removeMsg (Message *msg) {
+    messageSet.erase(msg);
+  };
+private:
+  std::set<Message*> messageSet;
+};
+void p13_36 () {
+}
+
+/**
+ * 练习13.37：为Message类添加成员，实现向folders添加或删除一个给定的Folder＊。这两个成员类似Folder类的addMsg和remMsg操作。
+ */
+void p13_37 () {
+}
+
+/**
+ * 练习13.38：我们并未使用拷贝和交换方式来设计Message的赋值运算符。你认为其原因是什么？
+ */
+void p13_38 () {
+  // 使用拷贝和交换效率更低
 }
 
 int main () {
@@ -176,6 +208,10 @@ int main () {
   // p13_32();
   // p13_33();
   // p13_34();
+  // p13_35();
+  // p13_36();
+  // p13_37();
+  // p13_38();
 
   return 0;
 }
