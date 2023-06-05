@@ -114,10 +114,40 @@ void p13_39 () {
 void p13_40 () {
 }
 
+/**
+ * 练习13.41：在push_back中，我们为什么在construct调用中使用前置递增运算？如果使用后置递增运算的话，会发生什么？
+ */
+void p13_41 () {
+  // first_free 表示值的下一个指针，使用后置那么就会留空一个
+}
+
+/**
+ * 练习13.42：在你的TextQuery和QueryResult类（参见12.3节，第431页）中用你的StrVec类代替vector<string>，以此来测试你的StrVec类。
+ */
+void p13_42 () {
+}
+
+/**
+ * 练习13.43：重写free成员，用for_each和lambda（参见10.3.2节，第346页）来代替for循环destroy元素。你更倾向于哪种实现，为什么？
+ */
+void StrVec::free() {
+  if (elements) {
+    for_each(first_free, elements, [](string *p) {
+      alloc.destroy(p);
+    });
+    alloc.deallocate(elements, cap - elements);
+  }
+}
+void p13_43 () {
+  // 写 for_each + lambda 表达式更加简洁
+}
+
 int main () {
   // p13_39();
   // p13_40();
-
+  // p13_41();
+  // p13_42();
+  // p13_43();
 
   return 0;
 }
