@@ -1,5 +1,5 @@
-#ifndef String_h
-#define String_h
+#ifndef StrVec_h
+#define StrVec_h
 
 #include <iostream>
 #include <string>
@@ -13,36 +13,23 @@ using std::endl;
 using std::string;
 using std::vector;
 
-class String {
+class StrVec {
 public:
-  String(): elements(nullptr), first_free(nullptr), cap(nullptr) {}
+  StrVec(): elements(nullptr), first_free(nullptr), cap(nullptr) {}
 
-  String(std::initializer_list<char> listStr): elements(nullptr), first_free(nullptr), cap(nullptr) {
+  StrVec(std::initializer_list<string> listStr): elements(nullptr), first_free(nullptr), cap(nullptr) {
     auto newData = alloc_n_copy(listStr.begin(), listStr.end());
     elements = newData.first;
     first_free = newData.second;
   }
 
-  String(const char *str): elements(nullptr), first_free(nullptr), cap(nullptr) {
-    char *sl = const_cast<char*>(str);
-    while (*sl) {
-      ++sl;
-    }
-
-    auto newData = alloc_n_copy(str, sl);
-    elements = newData.first;
-    first_free = newData.second;
-  }
-
-  String(const String &s) {
-    cout << "String(const String &s)" << endl;
+  StrVec(const StrVec &s) {
     auto newData = alloc_n_copy(s.begin(), s.end());
     elements = newData.first;
     first_free = newData.second;
   }
 
-  String &operator=(const String &rhs) {
-    cout << "String &operator=" << endl;
+  StrVec &operator=(const StrVec &rhs) {
     auto data = alloc_n_copy(rhs.begin(), rhs.end());
     free();
     elements = data.first;
@@ -50,12 +37,11 @@ public:
     return *this;
   }
 
-
-  String(String &&s) noexcept : elements(s.elements), first_free(s.first_free), cap(s.cap) {
+  StrVec(StrVec &&s) noexcept : elements(s.elements), first_free(s.first_free), cap(s.cap) {
     s.elements = s.first_free = s.cap = nullptr;
   }
 
-  String &operator=(String &&rhs) noexcept {
+  StrVec &operator=(StrVec &&rhs) noexcept {
     if (this != &rhs) {
       free();
       elements = rhs.elements;
@@ -66,11 +52,11 @@ public:
     return *this;
   }
 
-  ~String() {
+  ~StrVec() {
     free();
   }
 
-  void push_back(const char &s) {
+  void push_back(const string &s) {
     chk_n_alloc();
     alloc.construct(first_free++, s);
   };
@@ -83,16 +69,16 @@ public:
     return cap - elements;
   }
 
-  char *begin() const {
+  string *begin() const {
     return elements;
   }
 
-  char *end() const {
+  string *end() const {
     return first_free;
   }
 
 private:
-  static std::allocator<char> alloc;
+  static std::allocator<string> alloc;
 
   void chk_n_alloc () {
     if (size() == capacity()) {
@@ -100,7 +86,7 @@ private:
     }
   }
 
-  std::pair<char*, char*> alloc_n_copy(const char*b, const char*e) {
+  std::pair<string*, string*> alloc_n_copy(const string*b, const string*e) {
     auto data = alloc.allocate(e - b);
     return {
       data,
@@ -129,9 +115,17 @@ private:
     first_free = dest;
     cap = elements + newCapacity;
   };
-  char *elements;
-  char *first_free;
-  char *cap;
+  string *elements;
+  string *first_free;
+  string *cap;
 };
+void StrVec::free() {
+  if (elements) {
+    for_each(first_free, elements, [](string *p) {
+      alloc.destroy(p);
+    });
+    alloc.deallocate(elements, cap - elements);
+  }
+}
 
 #endif
