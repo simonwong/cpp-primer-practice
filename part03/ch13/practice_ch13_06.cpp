@@ -75,6 +75,76 @@ void p13_51 () {
   // 他是移动操作
 }
 
+/**
+ * 练习13.52：详细解释第478页中的HasPtr对象的赋值发生了什么？
+ * 特别是，一步一步描述hp、hp2以及HasPtr的赋值运算符中的参数rhs的值发生了什么变化。
+ */
+void p13_52 () {
+  // 左指是被复制，右值是被移动
+}
+
+/**
+ * 练习13.53：从底层效率的角度看，HasPtr的赋值运算符并不理想，解释为什么。
+ * 为HasPtr实现一个拷贝赋值运算符和一个移动赋值运算符，并比较你的新的移动赋值运算符中执行的操作和拷贝并交换版本中执行的操作。
+ */
+void p13_53 () {
+  // 见 https://stackoverflow.com/questions/21010371/why-is-it-not-efficient-to-use-a-single-assignment-operator-handling-both-copy-a
+}
+
+/**
+ * 练习13.54：如果我们为HasPtr定义了移动赋值运算符，
+ * 但未改变拷贝并交换运算符，会发生什么？编写代码验证你的答案。
+ */
+void p13_54 () {
+  // error: ambiguous overload for 'operator='
+}
+
+/**
+ * 练习13.55：为你的StrBlob添加一个右值引用版本的push_back。
+ */
+void p13_55 () {
+  // void push_back(string &&s) { data->push_back(std::move(s)); }
+}
+
+/**
+ * 练习13.56：如果sorted定义如下，会发生什么：
+ */
+void p13_56 () {
+  // 堆栈溢出
+}
+
+/**
+ * 练习13.57：如果sorted定义如下，会发生什么：
+ */
+void p13_57 () {
+  // Foo Foo::sorted() const & { return Foo(*this).sorted(); }
+}
+
+/**
+ * 练习13.58：编写新版本的Foo类，其sorted函数中有打印语句，测试这个类，来验证你对前两题的答案是否正确。
+ */
+
+class Foo {
+public:
+  Foo sorted() &&;
+  Foo sorted() const &;
+private:
+  vector<int> data;
+};
+
+Foo Foo::sorted() && {
+  sort(data.begin(), data.end());
+  std::cout << "&&" << std::endl; // debug
+  return *this;
+}
+
+Foo Foo::sorted() const & {
+  std::cout << "const &" << std::endl;
+  return Foo(*this).sorted();
+}
+void p13_58 () {
+}
+
 int main () {
   // p13_45();
   // p13_46();
@@ -83,6 +153,13 @@ int main () {
   // p13_49();
   // p13_50();
   // p13_51();
+  // p13_52();
+  // p13_53();
+  // p13_54();
+  // p13_55();
+  // p13_56();
+  // p13_57();
+  // p13_58();
 
   return 0;
 }
